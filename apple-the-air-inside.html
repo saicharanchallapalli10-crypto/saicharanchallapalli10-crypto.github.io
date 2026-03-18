@@ -16,48 +16,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
     }
 
-    .top-links {
-      position: absolute;
-      top: 1.5rem;
-      left: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-      text-align: left;
-    }
-
-    .top-links a {
-      color: #ececec;
-      text-decoration: none;
-      font-weight: 300;
-      transition: color 0.2s;
-    }
-
-    .top-links a:hover { color: #fff; }
-
-    .center-text {
-      font-size: 0.9rem;
-      font-weight: 400;
+    h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 500;
       letter-spacing: 0.05em;
-      text-transform: none;
       text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <div class="top-links">
-    <a href="index.html">← Home</a>
-    <a href="blog.html">Blog</a>
-  </div>
-
-  <div class="center-text">
-    Apple: The Air Inside
-  </div>
+  <h1>Apple: The Air Inside</h1>
 
 </body>
 </html>

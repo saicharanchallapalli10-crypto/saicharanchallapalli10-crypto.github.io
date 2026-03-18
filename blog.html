@@ -12,21 +12,20 @@
       background: #212121;
       color: #ececec;
       font-family: 'Inter', sans-serif;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      position: relative;
     }
 
-    .center-links {
+    nav {
       display: flex;
       flex-direction: column;
       gap: 1rem;
       text-align: center;
     }
 
-    .center-links a {
+    nav a {
       color: #ececec;
       text-decoration: none;
       font-size: 0.9rem;
@@ -34,38 +33,14 @@
       transition: color 0.2s;
     }
 
-    .center-links a:hover { color: #fff; }
-
-    .top-links {
-      position: absolute;
-      top: 1.5rem;
-      left: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      font-size: 0.85rem;
-    }
-
-    .top-links a {
-      color: #ececec;
-      text-decoration: none;
-      font-weight: 300;
-      transition: color 0.2s;
-    }
-
-    .top-links a:hover { color: #fff; }
+    nav a:hover { color: #fff; }
   </style>
 </head>
 <body>
 
-  <div class="top-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">About Me</a>
-  </div>
-
-  <div class="center-links">
+  <nav>
     <a href="apple-the-air-inside.html">Apple: The Air Inside</a>
-  </div>
+  </nav>
 
 </body>
 </html>

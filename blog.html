@@ -14,75 +14,57 @@
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 2rem;
-    }
-
-    .page {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 2rem;
+      position: relative;
     }
 
-    .page h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 500;
-      letter-spacing: 0.05em;
-    }
-
-    .posts {
+    .center-links {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      width: 100%;
-      max-width: 320px;
+      text-align: center;
     }
 
-    .posts a {
-      font-size: clamp(1.4rem, 3vw, 2.4rem);
-      font-weight: 400;
+    .center-links a {
       color: #ececec;
       text-decoration: none;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #444;
+      font-size: 0.9rem;
+      font-weight: 400;
       transition: color 0.2s;
     }
 
-    .posts a:hover {
-      color: #fff;
-    }
+    .center-links a:hover { color: #fff; }
 
-    .footer {
+    .top-links {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
       display: flex;
-      gap: 1rem;
-      font-size: 0.9rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
     }
 
-    .footer a {
-      color: #888;
+    .top-links a {
+      color: #ececec;
       text-decoration: none;
       font-weight: 300;
+      transition: color 0.2s;
     }
 
-    .footer a:hover {
-      color: #fff;
-    }
+    .top-links a:hover { color: #fff; }
   </style>
 </head>
 <body>
 
-  <div class="page">
-    <h1>Blog</h1>
-    <div class="posts">
-      <a href="apple-the-air-inside.html">Apple: The Air Inside</a>
-    </div>
-    <div class="footer">
-      <a href="index.html">Home</a>
-      <a href="about.html">About Me</a>
-    </div>
+  <div class="top-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+  </div>
+
+  <div class="center-links">
+    <a href="apple-the-air-inside.html">Apple: The Air Inside</a>
   </div>
 
 </body>

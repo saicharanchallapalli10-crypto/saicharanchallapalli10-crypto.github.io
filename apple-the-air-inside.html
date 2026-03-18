@@ -13,50 +13,50 @@
       color: #ececec;
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      padding: 2rem;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
-    nav {
+    .top-links {
       position: absolute;
-      top: 2rem;
-      left: 2rem;
+      top: 1.5rem;
+      left: 1.5rem;
       display: flex;
-      gap: 1rem;
-      font-size: 0.9rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      text-align: left;
     }
 
-    nav a {
+    .top-links a {
       color: #ececec;
       text-decoration: none;
       font-weight: 300;
       transition: color 0.2s;
     }
 
-    nav a:hover { color: #fff; }
+    .top-links a:hover { color: #fff; }
 
-    .article {
-      text-align: center;
-    }
-
-    .article h1 {
-      font-size: clamp(2.7rem, 7vw, 5rem);
-      font-weight: 500;
+    .center-text {
+      font-size: 0.9rem;
+      font-weight: 400;
       letter-spacing: 0.05em;
+      text-transform: none;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <nav>
+  <div class="top-links">
     <a href="index.html">← Home</a>
     <a href="blog.html">Blog</a>
-  </nav>
+  </div>
 
-  <div class="article">
-    <h1>Apple: The Air Inside</h1>
+  <div class="center-text">
+    Apple: The Air Inside
   </div>
 
 </body>

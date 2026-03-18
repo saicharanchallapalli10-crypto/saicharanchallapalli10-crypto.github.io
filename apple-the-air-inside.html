@@ -15,7 +15,6 @@
       min-height: 100vh;
       padding: 2rem;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
     }
@@ -25,13 +24,13 @@
       top: 2rem;
       left: 2rem;
       display: flex;
-      gap: 0.5rem;
+      gap: 1rem;
+      font-size: 0.9rem;
     }
 
     nav a {
       color: #ececec;
       text-decoration: none;
-      font-size: 0.9rem;
       font-weight: 300;
       transition: color 0.2s;
     }
@@ -40,23 +39,12 @@
 
     .article {
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 800px;
     }
 
     .article h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-size: clamp(2.7rem, 7vw, 5rem);
       font-weight: 500;
-      letter-spacing: 0.04em;
-    }
-
-    .article p {
-      font-size: clamp(1.2rem, 2.8vw, 1.8rem);
-      font-weight: 300;
-      color: #c0c0c0;
-      line-height: 1.5;
+      letter-spacing: 0.05em;
     }
   </style>
 </head>
@@ -64,19 +52,11 @@
 
   <nav>
     <a href="index.html">← Home</a>
-    <a href="about.html">About</a>
+    <a href="blog.html">Blog</a>
   </nav>
 
   <div class="article">
     <h1>Apple: The Air Inside</h1>
-    <p>
-      A deep dive into the invisible contours of the apple we breathe — how the microscopic pockets of air shape its texture,
-      influence every bite, and mirror the delicate balance between nature's chemistry and the human experience.
-    </p>
-    <p>
-      The article unfolds through sensory descriptions and research-backed anatomy, tying the tactile thrill of slicing into a crisp apple to
-      broader meditations on the unseen spaces that give everyday objects their soul.
-    </p>
   </div>
 
 </body>

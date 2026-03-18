@@ -34,13 +34,40 @@
     }
 
     nav a:hover { color: #fff; }
+
+    .about {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .about p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: #888;
+    }
+
+    .about {
+      display: none;
+      flex-direction: column;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+    }
+
+    .about.visible { display: flex; }
   </style>
 </head>
 <body>
 
   <nav>
     <a href="blog.html">Blog</a>
-    <a href="about.html">About Me</a>
+    <a href="#" onclick="document.getElementById('about').classList.toggle('visible'); return false;">About Me</a>
+    <div class="about" id="about">
+      <p>SaiCharan Challapalli</p>
+      <p>Northeastern University</p>
+      <p>EECE 2029</p>
+    </div>
   </nav>
 
 </body>

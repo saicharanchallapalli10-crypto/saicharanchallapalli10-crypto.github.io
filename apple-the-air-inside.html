@@ -13,21 +13,45 @@
       color: #ececec;
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      padding-top: 4rem;
+      position: relative;
+      padding: 2rem;
     }
 
+    nav {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      align-items: flex-start;
+    }
+
+    nav a {
+      color: #ececec;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: #fff; }
+
     h1 {
-      font-size: clamp(4rem, 10vw, 7rem);
-      font-weight: 500;
-      letter-spacing: 0.05em;
+      width: 100%;
+      margin-top: 2.5rem;
       text-align: center;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
     }
   </style>
 </head>
 <body>
+
+  <nav>
+    <a href="index.html">Home</a>
+  </nav>
 
   <h1>Apple: The Air Inside</h1>
 

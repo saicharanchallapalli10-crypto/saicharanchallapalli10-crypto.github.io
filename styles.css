@@ -516,12 +516,22 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  html {
     scroll-behavior: auto !important;
+  }
+
+  .view,
+  .view.is-active,
+  .minimal-link,
+  .minimal-link::after,
+  .back-link,
+  .project-item {
+    transition: none !important;
+  }
+
+  /* Keep a very slow ambient aura so the page never appears fully static. */
+  .background__aurora {
+    animation-duration: 90s !important;
+    animation-timing-function: linear !important;
   }
 }

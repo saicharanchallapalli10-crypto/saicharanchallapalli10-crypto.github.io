@@ -83,8 +83,8 @@ a {
   height: min(48vw, 42rem);
   background: radial-gradient(circle at 34% 34%, rgba(26, 58, 107, 0.56), rgba(26, 58, 107, 0.28) 34%, transparent 74%);
   animation:
-    auraDriftOne 34s infinite alternate var(--ease-soft),
-    auraPulseOne 21s infinite ease-in-out;
+    auraDriftOne 14s infinite alternate var(--ease-soft),
+    auraPulseOne 9s infinite ease-in-out;
 }
 
 .background__aurora--two {
@@ -95,8 +95,8 @@ a {
   filter: blur(118px);
   mix-blend-mode: lighten;
   animation:
-    auraDriftTwo 40s infinite alternate-reverse var(--ease-soft),
-    auraPulseTwo 26s infinite ease-in-out;
+    auraDriftTwo 18s infinite alternate-reverse var(--ease-soft),
+    auraPulseTwo 11s infinite ease-in-out;
 }
 
 .background__aurora--three {
@@ -106,8 +106,8 @@ a {
   background: radial-gradient(circle at 50% 48%, rgba(22, 45, 74, 0.5), rgba(22, 45, 74, 0.22) 46%, transparent 78%);
   filter: blur(90px);
   animation:
-    auraDriftThree 28s infinite alternate var(--ease-soft),
-    auraPulseThree 20s infinite ease-in-out;
+    auraDriftThree 12s infinite alternate var(--ease-soft),
+    auraPulseThree 8s infinite ease-in-out;
 }
 
 .background__aurora--four {
@@ -118,8 +118,8 @@ a {
   filter: blur(84px);
   opacity: 0.5;
   animation:
-    auraDriftFour 24s infinite alternate-reverse var(--ease-soft),
-    auraPulseFour 31s infinite ease-in-out;
+    auraDriftFour 10s infinite alternate-reverse var(--ease-soft),
+    auraPulseFour 7s infinite ease-in-out;
 }
 
 .background__grid {
@@ -531,7 +531,7 @@ a:focus-visible {
 
   /* Keep a very slow ambient aura so the page never appears fully static. */
   .background__aurora {
-    animation-duration: 90s !important;
+    animation-duration: 45s !important;
     animation-timing-function: linear !important;
   }
 }

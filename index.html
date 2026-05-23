@@ -6,610 +6,120 @@
   <title>SaiCharan Challapalli</title>
   <meta
     name="description"
-    content="A cinematic scroll-driven homepage for SaiCharan Challapalli."
+    content="Minimal personal website for SaiCharan Challapalli."
   >
-  <style>
-    :root {
-      --bg-progress: 0;
-      --glow-progress: 0;
-      --line-1-progress: 0;
-      --line-2-progress: 0;
-      --depth-progress: 0;
-      --link-progress: 0;
-      --grain-opacity: 0.035;
-      --text-color: rgba(255, 255, 255, 0.94);
-      --muted-color: rgba(255, 255, 255, 0.62);
-      --page-bg: #000000;
-      --bg-a: #07111e;
-      --bg-b: #12233a;
-      --bg-c: #40648d;
-      --title-width: min(92vw, 1100px);
-      --body-font: "SF Pro Display", "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      background: #000;
-      scroll-behavior: auto;
-    }
-
-    body {
-      min-height: 100vh;
-      background: var(--page-bg);
-      color: var(--text-color);
-      font-family: var(--body-font);
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .page {
-      position: relative;
-      min-height: 420vh;
-    }
-
-    .viewport {
-      position: sticky;
-      top: 0;
-      min-height: 100vh;
-      overflow: clip;
-      background: #000;
-      isolation: isolate;
-    }
-
-    .viewport::before,
-    .viewport::after {
-      content: "";
-      position: absolute;
-      inset: -8%;
-      pointer-events: none;
-      will-change: opacity, transform;
-    }
-
-    .viewport::before {
-      background:
-        radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.08), transparent 34%),
-        radial-gradient(circle at 25% 25%, rgba(80, 128, 184, 0.28), transparent 30%),
-        radial-gradient(circle at 72% 32%, rgba(109, 155, 218, 0.2), transparent 28%),
-        linear-gradient(180deg, var(--bg-a) 0%, var(--bg-b) 58%, var(--bg-c) 100%);
-      opacity: calc(var(--bg-progress) * 0.95);
-      transform: translate3d(0, calc(var(--depth-progress) * -2%), 0) scale(1.03);
-      z-index: 0;
-    }
-
-    .viewport::after {
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03)),
-        url("Homepage Bg.jpg");
-      background-position: center 82%;
-      background-repeat: no-repeat;
-      background-size: cover;
-      opacity: calc(var(--bg-progress) * 0.92);
-      transform: translate3d(0, calc(var(--depth-progress) * -5%), 0) scale(calc(1.03 - var(--bg-progress) * 0.015));
-      z-index: 0;
-    }
-
-    .grain {
-      position: absolute;
-      inset: 0;
-      opacity: calc(var(--grain-opacity) + var(--bg-progress) * 0.02);
-      mix-blend-mode: soft-light;
-      background-image:
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 0 0.8px, transparent 1px),
-        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.28) 0 0.7px, transparent 1px),
-        radial-gradient(circle at 50% 75%, rgba(255, 255, 255, 0.24) 0 0.8px, transparent 1px);
-      background-size: 160px 160px, 220px 220px, 190px 190px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .nav {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 1.3rem 1.25rem;
-      z-index: 3;
-      pointer-events: none;
-    }
-
-    .nav__brand {
-      pointer-events: auto;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 0.68rem;
-      color: rgba(255, 255, 255, calc(0.5 + var(--bg-progress) * 0.45));
-      transition: color 180ms ease;
-    }
-
-    .nav__brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.65rem;
-      font-weight: 600;
-    }
-
-    .nav__brand-mark {
-      width: 0.52rem;
-      height: 0.52rem;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(125, 176, 238, 0.7));
-      box-shadow: 0 0 22px rgba(166, 210, 255, 0.55);
-    }
-
-    .hero {
-      position: relative;
-      z-index: 2;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 5.5rem 1.25rem 2rem;
-    }
-
-    .hero__inner {
-      width: var(--title-width);
-      display: grid;
-      gap: clamp(0.9rem, 2vw, 1.5rem);
-      justify-items: center;
-      text-align: center;
-    }
-
-    .hero__meta {
-      text-transform: uppercase;
-      letter-spacing: 0.26em;
-      font-size: clamp(0.68rem, 1vw, 0.78rem);
-      color: var(--muted-color);
-    }
-
-    .titles {
-      display: grid;
-      gap: 0.18em;
-      width: 100%;
-      justify-items: center;
-      perspective: 1200px;
-    }
-
-    .title {
-      --fit-scale: 1;
-      width: 100%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(0.03em, 0.2vw, 0.07em);
-      font-size: clamp(2.4rem, 8.4vw, 6.9rem);
-      line-height: 0.95;
-      font-weight: 500;
-      letter-spacing: -0.05em;
-      white-space: nowrap;
-      transform: scale(var(--fit-scale));
-      transform-origin: center center;
-      will-change: transform;
-      text-wrap: balance;
-    }
-
-    .title--secondary {
-      color: rgba(255, 255, 255, 0.88);
-    }
-
-    .word-gap {
-      width: clamp(0.26em, 0.55vw, 0.4em);
-      display: inline-block;
-      flex: 0 0 auto;
-    }
-
-    .letter {
-      display: inline-block;
-      opacity: calc(0.001 + var(--progress) * 0.999);
-      transform:
-        translate3d(calc(var(--from-x) * 0.82), calc((1 - var(--progress)) * 1rem), 0)
-        scale(calc(0.84 + var(--progress) * 0.16));
-      color: rgba(255, 255, 255, calc(0.14 + var(--progress) * 0.86));
-      text-shadow:
-        0 0 calc(var(--glow) * 10px) rgba(145, 198, 255, 0.12),
-        0 0 calc(var(--glow) * 20px) rgba(145, 198, 255, 0.08);
-      will-change: transform, opacity;
-    }
-
-    .letter[data-line="1"] {
-      --progress: var(--line-1-progress);
-      --glow: calc(var(--line-1-progress) * var(--glow-progress));
-    }
-
-    .letter[data-line="2"] {
-      --progress: var(--line-2-progress);
-      --glow: calc(var(--line-2-progress) * var(--glow-progress));
-    }
-
-    .hero__meta {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.9rem 1.2rem;
-      margin-top: 0.35rem;
-      opacity: calc(max(0, (var(--bg-progress) - 0.22) * 1.45));
-      transform: translateY(calc((1 - var(--bg-progress)) * 20px));
-    }
-
-    .hero__meta span {
-      position: relative;
-      padding-inline: 0.15rem;
-    }
-
-    .hero__meta span::after {
-      content: "";
-      position: absolute;
-      right: -0.66rem;
-      top: 50%;
-      width: 0.18rem;
-      height: 0.18rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.32);
-      transform: translateY(-50%);
-    }
-
-    .hero__meta span:last-child::after {
-      display: none;
-    }
-
-    .hero__links {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(0.7rem, 1.6vw, 1.15rem);
-      flex-wrap: wrap;
-      margin-top: clamp(0.4rem, 1.1vw, 0.8rem);
-      width: 100%;
-    }
-
-    .hero__link {
-      --side: 1;
-      min-width: clamp(7.8rem, 12vw, 9.6rem);
-      padding: 0.9rem 1.35rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, calc(0.08 + var(--bg-progress) * 0.2));
-      background: rgba(255, 255, 255, calc(0.03 + var(--bg-progress) * 0.07));
-      color: rgba(255, 255, 255, calc(0.34 + var(--link-progress) * 0.66));
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 0.68rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      opacity: calc(0.08 + var(--link-progress) * 0.92);
-      transform:
-        translate3d(
-          calc((1 - var(--link-progress)) * var(--side) * 18vw),
-          calc((1 - var(--link-progress)) * 0.8rem),
-          0
-        )
-        scale(calc(0.9 + var(--link-progress) * 0.1));
-      box-shadow:
-        0 14px 32px rgba(4, 8, 14, calc(0.08 + var(--link-progress) * 0.22)),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-      will-change: transform, opacity;
-      transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease;
-      pointer-events: auto;
-    }
-
-    .hero__link--about {
-      --side: -1;
-    }
-
-    .hero__link--blog {
-      --side: 1;
-    }
-
-    .hero__link:hover,
-    .hero__link:focus-visible {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.34);
-      background: rgba(255, 255, 255, 0.12);
-      outline: none;
-    }
-
-    .spacer {
-      position: relative;
-      z-index: -1;
-      height: 320vh;
-    }
-
-    @media (max-width: 900px) {
-      .page {
-        min-height: 360vh;
-      }
-
-      .hero {
-        padding-top: 6rem;
-      }
-
-      .title {
-        font-size: clamp(2.4rem, 10.5vw, 4.9rem);
-        white-space: normal;
-      }
-
-      .hero__link {
-        min-width: 7.2rem;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .nav {
-        padding: 0.95rem 0.8rem;
-      }
-
-      .nav__brand {
-        letter-spacing: 0.16em;
-      }
-
-      .hero__inner {
-        gap: 1rem;
-      }
-
-      .title {
-        font-size: clamp(1.95rem, 9.8vw, 3.15rem);
-      }
-
-      .hero__meta {
-        gap: 0.55rem 0.9rem;
-        font-size: 0.62rem;
-        letter-spacing: 0.18em;
-      }
-
-      .hero__link {
-        min-width: 6.7rem;
-        padding: 0.76rem 1.05rem;
-        font-size: 0.6rem;
-        letter-spacing: 0.16em;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .nav {
-        padding: 0.8rem 0.65rem;
-      }
-
-      .titles {
-        gap: 0.35rem;
-      }
-
-      .title {
-        width: min(100%, 15rem);
-        flex-wrap: wrap;
-        gap: 0.02em 0.09em;
-        font-size: clamp(1.08rem, 5.7vw, 1.62rem);
-        line-height: 0.94;
-        letter-spacing: -0.035em;
-      }
-
-      .hero__meta {
-        font-size: 0.58rem;
-      }
-
-      .hero__links {
-        gap: 0.55rem;
-      }
-
-      .hero__link {
-        min-width: 6.1rem;
-        padding: 0.7rem 0.95rem;
-        font-size: 0.56rem;
-        letter-spacing: 0.14em;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .page {
-        min-height: 100vh;
-      }
-
-      .viewport {
-        position: relative;
-      }
-
-      .letter {
-        opacity: 1;
-        transform: none;
-      }
-
-      .hero__meta,
-      .hero__link,
-      .viewport::before,
-      .viewport::after {
-        opacity: 1;
-        transform: none;
-      }
-
-      .spacer {
-        display: none;
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="page">
-    <section class="viewport" aria-label="Homepage hero">
-      <div class="grain" aria-hidden="true"></div>
+  <div class="background" aria-hidden="true">
+    <div class="background__aurora background__aurora--one"></div>
+    <div class="background__aurora background__aurora--two"></div>
+    <div class="background__aurora background__aurora--three"></div>
+    <div class="background__grid"></div>
+    <div class="background__noise"></div>
+    <div class="background__vignette"></div>
+  </div>
 
-      <header class="nav">
-        <a class="nav__brand" href="index.html" aria-label="Homepage">
-          <span class="nav__brand-mark" aria-hidden="true"></span>
-          <span>SC</span>
-        </a>
-      </header>
-
-      <div class="hero">
-        <div class="hero__inner">
-          <div class="titles" aria-hidden="true">
-            <h1 class="title title--primary" data-text="Sai Charan" data-line="1"></h1>
-            <h2 class="title title--secondary" data-text="Challapalli" data-line="2"></h2>
-          </div>
-
-          <p class="hero__meta">
-            <span>Boston</span>
-            <span>Systems</span>
-            <span>Craft</span>
-          </p>
-
-          <nav class="hero__links" aria-label="Primary">
-            <a class="hero__link hero__link--about" href="about.html">About</a>
-            <a class="hero__link hero__link--blog" href="blog.html">Blog</a>
+  <main class="app" data-active-view="home">
+    <section
+      class="view view--home is-active"
+      data-view="home"
+      aria-labelledby="home-title"
+    >
+      <div class="view__inner view__inner--home">
+        <div class="hero">
+          <h1 class="hero__name" id="home-title">
+            <span>SaiCharan</span>
+            <span>Challapalli</span>
+          </h1>
+          <nav class="hero__nav" aria-label="Primary">
+            <a class="minimal-link" href="#/projects">Projects</a>
+            <a class="minimal-link" href="#/about">About Me</a>
           </nav>
         </div>
       </div>
     </section>
 
-    <div class="spacer" aria-hidden="true"></div>
+    <section
+      class="view view--subpage"
+      data-view="projects"
+      aria-labelledby="projects-title"
+      aria-hidden="true"
+    >
+      <a class="back-link" href="#/" aria-label="Back to homepage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5 8 12l7 7" />
+        </svg>
+      </a>
+
+      <div class="view__inner">
+        <div class="content-block">
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-title" id="projects-title">Projects</h2>
+
+          <div class="project-list" role="list">
+            <article class="project-item" role="listitem">
+              <div class="project-item__meta">Writing</div>
+              <h3>Apple: The Air Inside</h3>
+              <p>
+                A concise editorial piece exploring product atmosphere, restraint,
+                and the details that shape how technology feels.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="view view--subpage"
+      data-view="about"
+      aria-labelledby="about-title"
+      aria-hidden="true"
+    >
+      <a class="back-link" href="#/" aria-label="Back to homepage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5 8 12l7 7" />
+        </svg>
+      </a>
+
+      <div class="view__inner">
+        <div class="content-block content-block--about">
+          <p class="section-label">Profile</p>
+          <h2 class="section-title" id="about-title">About Me</h2>
+
+          <div class="about-copy">
+            <p>
+              I'm SaiCharan Challapalli, an Electrical Engineering student at
+              Northeastern University based in Boston, Massachusetts.
+            </p>
+            <p>
+              I'm interested in thoughtful systems, clean interfaces, and work
+              that feels precise, calm, and intentional.
+            </p>
+          </div>
+
+          <div class="detail-lines" aria-label="Details">
+            <div class="detail-line">
+              <span class="detail-line__label">Focus</span>
+              <span class="detail-line__value">Electrical Engineering, Product Thinking, Writing</span>
+            </div>
+            <div class="detail-line">
+              <span class="detail-line__label">Location</span>
+              <span class="detail-line__value">Boston, MA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <script>
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    function clamp(value, min, max) {
-      return Math.min(Math.max(value, min), max);
-    }
-
-    function easeInOutCubic(value) {
-      return value < 0.5
-        ? 4 * value * value * value
-        : 1 - Math.pow(-2 * value + 2, 3) / 2;
-    }
-
-    function mapProgress(progress, start, end) {
-      if (end <= start) {
-        return progress >= end ? 1 : 0;
-      }
-
-      return clamp((progress - start) / (end - start), 0, 1);
-    }
-
-    function splitTitle(node) {
-      const text = node.dataset.text || "";
-      const characters = [...text];
-      const visibleCharacters = characters.filter((character) => character !== " ");
-      const midpoint = (visibleCharacters.length - 1) / 2;
-      let visibleIndex = 0;
-
-      node.textContent = "";
-
-      characters.forEach((character) => {
-        if (character === " ") {
-          const gap = document.createElement("span");
-          gap.className = "word-gap";
-          gap.setAttribute("aria-hidden", "true");
-          node.appendChild(gap);
-          return;
-        }
-
-        const span = document.createElement("span");
-        const distance = Math.abs(visibleIndex - midpoint);
-        const direction = visibleIndex < midpoint ? -1 : 1;
-
-        span.className = "letter";
-        span.dataset.line = node.dataset.line;
-        span.textContent = character;
-        span.style.setProperty("--distance", distance.toFixed(2));
-        span.style.setProperty("--from-x", `${direction * (distance + 0.55)}rem`);
-        span.style.transitionDelay = `${distance * 22}ms`;
-
-        node.appendChild(span);
-        visibleIndex += 1;
-      });
-    }
-
-    document.querySelectorAll(".title").forEach(splitTitle);
-
-    const root = document.documentElement;
-    const titles = [...document.querySelectorAll(".title")];
-
-    function fitTitles() {
-      titles.forEach((title) => {
-        title.style.fontSize = "";
-        title.style.setProperty("--fit-scale", "1");
-
-        const availableWidth = (title.parentElement.clientWidth || title.clientWidth) * 0.9;
-        const contentWidth = title.scrollWidth;
-
-        if (!availableWidth || !contentWidth || contentWidth <= availableWidth) {
-          return;
-        }
-
-        const compactMultiplier = window.innerWidth < 600 ? 0.82 : 0.95;
-        const nextScale = clamp((availableWidth / contentWidth) * compactMultiplier, 0.56, 1);
-        title.style.setProperty("--fit-scale", nextScale.toFixed(3));
-      });
-    }
-
-    function renderScene(rawProgress) {
-      const clampedProgress = clamp(rawProgress, 0, 1);
-      const line1 = easeInOutCubic(mapProgress(clampedProgress, 0.08, 0.34));
-      const line2 = easeInOutCubic(mapProgress(clampedProgress, 0.24, 0.52));
-      const background = easeInOutCubic(mapProgress(clampedProgress, 0.48, 0.86));
-      const glow = easeInOutCubic(mapProgress(clampedProgress, 0.2, 0.7));
-      const depth = easeInOutCubic(mapProgress(clampedProgress, 0.18, 1));
-      const links = easeInOutCubic(mapProgress(clampedProgress, 0.56, 0.9));
-
-      root.style.setProperty("--line-1-progress", line1.toFixed(4));
-      root.style.setProperty("--line-2-progress", line2.toFixed(4));
-      root.style.setProperty("--bg-progress", background.toFixed(4));
-      root.style.setProperty("--glow-progress", glow.toFixed(4));
-      root.style.setProperty("--depth-progress", depth.toFixed(4));
-      root.style.setProperty("--link-progress", links.toFixed(4));
-    }
-
-    const previewProgress = Number.parseFloat(new URLSearchParams(window.location.search).get("progress"));
-    const hasPreviewProgress = Number.isFinite(previewProgress);
-
-    if (!prefersReducedMotion && !hasPreviewProgress) {
-      const page = document.querySelector(".page");
-      let ticking = false;
-
-      function updateScene() {
-        const scrollable = Math.max(page.offsetHeight - window.innerHeight, 1);
-        renderScene(window.scrollY / scrollable);
-        ticking = false;
-      }
-
-      function requestTick() {
-        if (!ticking) {
-          window.requestAnimationFrame(updateScene);
-          ticking = true;
-        }
-      }
-
-      updateScene();
-      fitTitles();
-      window.addEventListener("scroll", requestTick, { passive: true });
-      window.addEventListener("resize", () => {
-        requestTick();
-        fitTitles();
-      });
-    } else if (hasPreviewProgress) {
-      renderScene(previewProgress);
-      fitTitles();
-    } else {
-      root.style.setProperty("--line-1-progress", "1");
-      root.style.setProperty("--line-2-progress", "1");
-      root.style.setProperty("--bg-progress", "1");
-      root.style.setProperty("--glow-progress", "1");
-      root.style.setProperty("--depth-progress", "0");
-      root.style.setProperty("--link-progress", "1");
-      fitTitles();
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

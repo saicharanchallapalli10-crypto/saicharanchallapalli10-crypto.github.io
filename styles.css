@@ -27,13 +27,11 @@ html {
 }
 
 body {
+  position: relative;
   margin: 0;
   min-height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(26, 58, 107, 0.17), transparent 36%),
-    radial-gradient(circle at 100% 100%, rgba(9, 28, 64, 0.34), transparent 40%),
-    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 52%, var(--bg-deep) 100%);
+  background: var(--bg);
   color: var(--text);
   font-family: "Manrope", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -59,92 +57,72 @@ a {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  z-index: 0;
+  isolation: isolate;
 }
 
-.background__aurora,
-.background__grid,
+.background__spotlight,
 .background__noise,
 .background__vignette {
-  position: absolute;
+  position: fixed;
   inset: 0;
 }
 
-.background__aurora {
-  border-radius: 999px;
-  filter: blur(100px);
-  opacity: 0.62;
-  mix-blend-mode: screen;
-  will-change: transform, opacity;
+.background__spotlight {
+  inset: auto;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.48;
+  pointer-events: none;
+  will-change: transform;
+  z-index: -1;
 }
 
-.background__aurora--one {
-  inset: 4% auto auto 8%;
-  width: min(48vw, 42rem);
-  height: min(48vw, 42rem);
-  background: radial-gradient(circle at 34% 34%, rgba(26, 58, 107, 0.56), rgba(26, 58, 107, 0.28) 34%, transparent 74%);
-  animation:
-    auraDriftOne 14s infinite alternate var(--ease-soft),
-    auraPulseOne 9s infinite ease-in-out;
+.background__spotlight--one {
+  top: -10rem;
+  left: -8rem;
+  width: clamp(38rem, 48vw, 54rem);
+  height: clamp(38rem, 48vw, 54rem);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.62) 0%, rgba(232, 240, 255, 0.42) 36%, rgba(200, 216, 255, 0.12) 62%, rgba(200, 216, 255, 0) 76%);
+  animation: spotlightDriftOne 18s infinite ease-in-out;
 }
 
-.background__aurora--two {
-  inset: auto 6% 2% auto;
-  width: min(50vw, 44rem);
-  height: min(50vw, 44rem);
-  background: radial-gradient(circle at 60% 44%, rgba(13, 42, 94, 0.52), rgba(13, 42, 94, 0.25) 40%, transparent 76%);
-  filter: blur(118px);
-  mix-blend-mode: lighten;
-  animation:
-    auraDriftTwo 18s infinite alternate-reverse var(--ease-soft),
-    auraPulseTwo 11s infinite ease-in-out;
+.background__spotlight--two {
+  top: 18%;
+  right: -14rem;
+  width: clamp(40rem, 52vw, 56rem);
+  height: clamp(40rem, 52vw, 56rem);
+  background: radial-gradient(circle, rgba(232, 240, 255, 0.58) 0%, rgba(255, 255, 255, 0.34) 30%, rgba(200, 216, 255, 0.12) 58%, rgba(200, 216, 255, 0) 76%);
+  opacity: 0.54;
+  animation: spotlightDriftTwo 24s infinite ease-in-out;
 }
 
-.background__aurora--three {
-  inset: 46% auto auto 36%;
-  width: min(42vw, 34rem);
-  height: min(42vw, 34rem);
-  background: radial-gradient(circle at 50% 48%, rgba(22, 45, 74, 0.5), rgba(22, 45, 74, 0.22) 46%, transparent 78%);
-  filter: blur(90px);
-  animation:
-    auraDriftThree 12s infinite alternate var(--ease-soft),
-    auraPulseThree 8s infinite ease-in-out;
-}
-
-.background__aurora--four {
-  inset: 10% auto auto 58%;
-  width: min(38vw, 30rem);
-  height: min(38vw, 30rem);
-  background: radial-gradient(circle at 42% 40%, rgba(23, 59, 113, 0.48), rgba(23, 59, 113, 0.2) 42%, transparent 76%);
-  filter: blur(84px);
-  opacity: 0.5;
-  animation:
-    auraDriftFour 10s infinite alternate-reverse var(--ease-soft),
-    auraPulseFour 7s infinite ease-in-out;
-}
-
-.background__grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 120px 120px;
-  mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.34) 14%, rgba(0, 0, 0, 1) 38%, rgba(0, 0, 0, 1) 100%);
-  opacity: 0.18;
+.background__spotlight--three {
+  bottom: -16rem;
+  left: 26%;
+  width: clamp(34rem, 44vw, 50rem);
+  height: clamp(34rem, 44vw, 50rem);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.54) 0%, rgba(232, 240, 255, 0.3) 34%, rgba(200, 216, 255, 0.1) 60%, rgba(200, 216, 255, 0) 76%);
+  opacity: 0.42;
+  animation: spotlightDriftThree 15s infinite ease-in-out;
 }
 
 .background__noise {
-  opacity: 0.075;
+  opacity: 0.045;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='18' cy='14' r='0.8' opacity='0.26'/%3E%3Ccircle cx='68' cy='52' r='0.6' opacity='0.18'/%3E%3Ccircle cx='118' cy='28' r='0.7' opacity='0.14'/%3E%3Ccircle cx='36' cy='94' r='0.75' opacity='0.2'/%3E%3Ccircle cx='144' cy='108' r='0.9' opacity='0.16'/%3E%3Ccircle cx='88' cy='140' r='0.7' opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
   mix-blend-mode: screen;
 }
 
 .background__vignette {
   background:
-    radial-gradient(circle at 50% 16%, transparent 0%, transparent 34%, rgba(2, 8, 24, 0.2) 60%, rgba(1, 5, 15, 0.46) 100%),
-    linear-gradient(180deg, rgba(2, 8, 24, 0.1), rgba(1, 5, 15, 0.52));
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.05) 0%, transparent 40%, rgba(2, 8, 24, 0.12) 68%, rgba(1, 5, 15, 0.34) 100%),
+    linear-gradient(180deg, rgba(2, 8, 24, 0.04), rgba(1, 5, 15, 0.24));
+  z-index: 1;
 }
 
 .app {
   position: relative;
+  z-index: 1;
   min-height: 100vh;
   isolation: isolate;
 }
@@ -398,75 +376,30 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
-@keyframes auraDriftOne {
+@keyframes spotlightDriftOne {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.94);
+    transform: translate(-6vw, -4vh);
   }
   to {
-    transform: translate3d(14%, -9%, 0) rotate(55deg) scale(1.08);
+    transform: translate(10vw, 8vh);
   }
 }
 
-@keyframes auraDriftTwo {
+@keyframes spotlightDriftTwo {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.96);
+    transform: translate(8vw, -6vh);
   }
   to {
-    transform: translate3d(-13%, 10%, 0) rotate(-68deg) scale(1.14);
+    transform: translate(-10vw, 10vh);
   }
 }
 
-@keyframes auraDriftThree {
+@keyframes spotlightDriftThree {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
+    transform: translate(-4vw, 8vh);
   }
   to {
-    transform: translate3d(11%, -12%, 0) rotate(72deg) scale(1.12);
-  }
-}
-
-@keyframes auraDriftFour {
-  from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.9);
-  }
-  to {
-    transform: translate3d(-10%, 8%, 0) rotate(-54deg) scale(1.08);
-  }
-}
-
-@keyframes auraPulseOne {
-  0%, 100% {
-    opacity: 0.52;
-  }
-  50% {
-    opacity: 0.68;
-  }
-}
-
-@keyframes auraPulseTwo {
-  0%, 100% {
-    opacity: 0.48;
-  }
-  50% {
-    opacity: 0.63;
-  }
-}
-
-@keyframes auraPulseThree {
-  0%, 100% {
-    opacity: 0.44;
-  }
-  50% {
-    opacity: 0.59;
-  }
-}
-
-@keyframes auraPulseFour {
-  0%, 100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.55;
+    transform: translate(9vw, -9vh);
   }
 }
 
@@ -529,9 +462,7 @@ a:focus-visible {
     transition: none !important;
   }
 
-  /* Keep a very slow ambient aura so the page never appears fully static. */
-  .background__aurora {
-    animation-duration: 45s !important;
-    animation-timing-function: linear !important;
+  .background__spotlight {
+    animation-duration: 32s !important;
   }
 }

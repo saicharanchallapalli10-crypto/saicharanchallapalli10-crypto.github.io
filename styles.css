@@ -1,7 +1,7 @@
 :root {
-  --bg: #020818;
-  --bg-deep: #01040f;
-  --bg-soft: #091632;
+  --bg: #0a1628;
+  --bg-deep: #081120;
+  --bg-soft: #0d1f3c;
   --bg-glow: rgba(26, 58, 107, 0.24);
   --bg-glow-strong: rgba(13, 42, 94, 0.2);
   --text: rgba(247, 250, 255, 0.96);
@@ -31,7 +31,9 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow: hidden;
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.06), transparent 34%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 55%, var(--bg-deep) 100%);
   color: var(--text);
   font-family: "Manrope", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -71,40 +73,43 @@ a {
 .background__spotlight {
   inset: auto;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.48;
+  filter: blur(90px);
+  opacity: 0.4;
   pointer-events: none;
   will-change: transform;
   z-index: -1;
 }
 
 .background__spotlight--one {
-  top: -10rem;
-  left: -8rem;
-  width: clamp(38rem, 48vw, 54rem);
-  height: clamp(38rem, 48vw, 54rem);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.62) 0%, rgba(232, 240, 255, 0.42) 36%, rgba(200, 216, 255, 0.12) 62%, rgba(200, 216, 255, 0) 76%);
-  animation: spotlightDriftOne 18s infinite ease-in-out;
+  top: -12rem;
+  left: -10rem;
+  width: clamp(37.5rem, 52vw, 56.25rem);
+  height: clamp(37.5rem, 52vw, 56.25rem);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.44) 0%, rgba(220, 232, 255, 0.3) 34%, rgba(220, 232, 255, 0.08) 60%, rgba(220, 232, 255, 0) 76%);
+  animation: spotlightFloatOne 18s infinite ease-in-out;
+  animation-delay: -4s;
 }
 
 .background__spotlight--two {
-  top: 18%;
-  right: -14rem;
-  width: clamp(40rem, 52vw, 56rem);
-  height: clamp(40rem, 52vw, 56rem);
-  background: radial-gradient(circle, rgba(232, 240, 255, 0.58) 0%, rgba(255, 255, 255, 0.34) 30%, rgba(200, 216, 255, 0.12) 58%, rgba(200, 216, 255, 0) 76%);
-  opacity: 0.54;
-  animation: spotlightDriftTwo 24s infinite ease-in-out;
+  top: 10%;
+  right: -16rem;
+  width: clamp(39rem, 56vw, 54rem);
+  height: clamp(39rem, 56vw, 54rem);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(220, 232, 255, 0.28) 30%, rgba(220, 232, 255, 0.09) 58%, rgba(220, 232, 255, 0) 76%);
+  opacity: 0.38;
+  animation: spotlightFloatTwo 27s infinite ease-in-out;
+  animation-delay: -11s;
 }
 
 .background__spotlight--three {
-  bottom: -16rem;
-  left: 26%;
-  width: clamp(34rem, 44vw, 50rem);
-  height: clamp(34rem, 44vw, 50rem);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.54) 0%, rgba(232, 240, 255, 0.3) 34%, rgba(200, 216, 255, 0.1) 60%, rgba(200, 216, 255, 0) 76%);
-  opacity: 0.42;
-  animation: spotlightDriftThree 15s infinite ease-in-out;
+  bottom: -18rem;
+  left: 18%;
+  width: clamp(36rem, 48vw, 52rem);
+  height: clamp(36rem, 48vw, 52rem);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0%, rgba(220, 232, 255, 0.27) 36%, rgba(220, 232, 255, 0.08) 60%, rgba(220, 232, 255, 0) 76%);
+  opacity: 0.36;
+  animation: spotlightFloatThree 35s infinite ease-in-out;
+  animation-delay: -18s;
 }
 
 .background__noise {
@@ -376,30 +381,66 @@ a:focus-visible {
   outline-offset: 4px;
 }
 
-@keyframes spotlightDriftOne {
-  from {
-    transform: translate(-6vw, -4vh);
+@keyframes spotlightFloatOne {
+  0% {
+    transform: translate(-8vw, -6vh);
   }
-  to {
-    transform: translate(10vw, 8vh);
+  20% {
+    transform: translate(24vw, 8vh);
+  }
+  40% {
+    transform: translate(6vw, 28vh);
+  }
+  60% {
+    transform: translate(34vw, -2vh);
+  }
+  80% {
+    transform: translate(12vw, 18vh);
+  }
+  100% {
+    transform: translate(28vw, -12vh);
   }
 }
 
-@keyframes spotlightDriftTwo {
-  from {
-    transform: translate(8vw, -6vh);
+@keyframes spotlightFloatTwo {
+  0% {
+    transform: translate(8vw, -8vh);
   }
-  to {
-    transform: translate(-10vw, 10vh);
+  20% {
+    transform: translate(-16vw, 12vh);
+  }
+  40% {
+    transform: translate(-30vw, 30vh);
+  }
+  60% {
+    transform: translate(-6vw, 4vh);
+  }
+  80% {
+    transform: translate(-24vw, -10vh);
+  }
+  100% {
+    transform: translate(-10vw, 20vh);
   }
 }
 
-@keyframes spotlightDriftThree {
-  from {
-    transform: translate(-4vw, 8vh);
+@keyframes spotlightFloatThree {
+  0% {
+    transform: translate(0vw, 12vh);
   }
-  to {
-    transform: translate(9vw, -9vh);
+  20% {
+    transform: translate(20vw, -12vh);
+  }
+  40% {
+    transform: translate(34vw, 8vh);
+  }
+  60% {
+    transform: translate(10vw, -24vh);
+  }
+  80% {
+    transform: translate(28vw, 18vh);
+  }
+  100% {
+    transform: translate(6vw, -8vh);
   }
 }
 
@@ -419,6 +460,97 @@ a:focus-visible {
 
   .content-block {
     padding-top: 5.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .background__spotlight {
+    filter: blur(72px);
+  }
+
+  .background__spotlight--one,
+  .background__spotlight--two,
+  .background__spotlight--three {
+    width: clamp(15.625rem, 42vw, 21.875rem);
+    height: clamp(15.625rem, 42vw, 21.875rem);
+  }
+
+  .background__spotlight--one {
+    top: -5rem;
+    left: -4rem;
+  }
+
+  .background__spotlight--two {
+    top: 6%;
+    right: -5rem;
+  }
+
+  .background__spotlight--three {
+    bottom: -6rem;
+    left: 12%;
+  }
+
+  @keyframes spotlightFloatOne {
+    0% {
+      transform: translate(-4vw, -3vh);
+    }
+    20% {
+      transform: translate(14vw, 6vh);
+    }
+    40% {
+      transform: translate(6vw, 16vh);
+    }
+    60% {
+      transform: translate(18vw, 2vh);
+    }
+    80% {
+      transform: translate(10vw, 12vh);
+    }
+    100% {
+      transform: translate(16vw, -6vh);
+    }
+  }
+
+  @keyframes spotlightFloatTwo {
+    0% {
+      transform: translate(4vw, -4vh);
+    }
+    20% {
+      transform: translate(-10vw, 8vh);
+    }
+    40% {
+      transform: translate(-16vw, 16vh);
+    }
+    60% {
+      transform: translate(-4vw, 3vh);
+    }
+    80% {
+      transform: translate(-12vw, -5vh);
+    }
+    100% {
+      transform: translate(-6vw, 10vh);
+    }
+  }
+
+  @keyframes spotlightFloatThree {
+    0% {
+      transform: translate(0vw, 8vh);
+    }
+    20% {
+      transform: translate(12vw, -7vh);
+    }
+    40% {
+      transform: translate(18vw, 6vh);
+    }
+    60% {
+      transform: translate(6vw, -12vh);
+    }
+    80% {
+      transform: translate(14vw, 10vh);
+    }
+    100% {
+      transform: translate(4vw, -4vh);
+    }
   }
 }
 
@@ -448,6 +580,97 @@ a:focus-visible {
   }
 }
 
+@media (max-width: 480px) {
+  .background__spotlight {
+    filter: blur(58px);
+  }
+
+  .background__spotlight--one,
+  .background__spotlight--two,
+  .background__spotlight--three {
+    width: clamp(9.375rem, 44vw, 13.75rem);
+    height: clamp(9.375rem, 44vw, 13.75rem);
+  }
+
+  .background__spotlight--one {
+    top: -2.5rem;
+    left: -2rem;
+  }
+
+  .background__spotlight--two {
+    top: 8%;
+    right: -2.5rem;
+  }
+
+  .background__spotlight--three {
+    bottom: -3rem;
+    left: 18%;
+  }
+
+  @keyframes spotlightFloatOne {
+    0% {
+      transform: translate(-2vw, -2vh);
+    }
+    20% {
+      transform: translate(10vw, 4vh);
+    }
+    40% {
+      transform: translate(4vw, 10vh);
+    }
+    60% {
+      transform: translate(12vw, 1vh);
+    }
+    80% {
+      transform: translate(6vw, 8vh);
+    }
+    100% {
+      transform: translate(10vw, -4vh);
+    }
+  }
+
+  @keyframes spotlightFloatTwo {
+    0% {
+      transform: translate(3vw, -3vh);
+    }
+    20% {
+      transform: translate(-7vw, 6vh);
+    }
+    40% {
+      transform: translate(-11vw, 10vh);
+    }
+    60% {
+      transform: translate(-2vw, 2vh);
+    }
+    80% {
+      transform: translate(-8vw, -4vh);
+    }
+    100% {
+      transform: translate(-4vw, 7vh);
+    }
+  }
+
+  @keyframes spotlightFloatThree {
+    0% {
+      transform: translate(0vw, 5vh);
+    }
+    20% {
+      transform: translate(8vw, -5vh);
+    }
+    40% {
+      transform: translate(11vw, 5vh);
+    }
+    60% {
+      transform: translate(4vw, -8vh);
+    }
+    80% {
+      transform: translate(9vw, 7vh);
+    }
+    100% {
+      transform: translate(2vw, -3vh);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -463,6 +686,6 @@ a:focus-visible {
   }
 
   .background__spotlight {
-    animation-duration: 32s !important;
+    animation-duration: 48s !important;
   }
 }

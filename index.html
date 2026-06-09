@@ -14,6 +14,10 @@
     href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
   >
+  <script
+    type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"
+  ></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -58,11 +62,88 @@
       </a>
 
       <div class="view__inner">
-        <div class="content-block">
+        <div class="content-block content-block--projects">
           <p class="section-label">Selected Work</p>
           <h2 class="section-title" id="projects-title">Projects</h2>
 
-          <div class="project-list" role="list"></div>
+          <article class="pcb-project">
+            <div class="pcb-project__copy">
+              <p class="pcb-project__eyebrow">Hardware / Embedded</p>
+              <h3 class="pcb-project__title">USB-C Inline Power Meter</h3>
+              <p class="pcb-project__lede">
+                Designed a pass-through USB-C power meter that measures real-time
+                voltage, current, and power delivered to charging devices. The
+                device sits between a USB-PD charger and a sink, such as an iPhone,
+                and displays measurements on a 0.96&quot; OLED.
+              </p>
+
+              <div class="pcb-project__stats" aria-label="Measurements displayed">
+                <div class="pcb-stat">
+                  <span class="pcb-stat__label">Voltage (V)</span>
+                  <span class="pcb-stat__value">Bus voltage between the charger and device</span>
+                </div>
+                <div class="pcb-stat">
+                  <span class="pcb-stat__label">Current (A)</span>
+                  <span class="pcb-stat__value">Current through the shunt resistor</span>
+                </div>
+                <div class="pcb-stat">
+                  <span class="pcb-stat__label">Power (W)</span>
+                  <span class="pcb-stat__value">Voltage × current, the actual delivered power</span>
+                </div>
+              </div>
+
+              <div class="pcb-project__details">
+                <p class="pcb-project__subhead">Key design decisions</p>
+                <ul class="pcb-project__list">
+                  <li>High-side current sensing with a 10mΩ shunt and TI INA226 over I²C.</li>
+                  <li>Wide-input TPS62933 buck regulator for the 3.3V rail across the full USB-PD range.</li>
+                  <li>Passive CC1/CC2 pass-through to preserve USB-PD negotiation without disrupting handshake.</li>
+                  <li>Seeed XIAO RP2040 microcontroller for I²C control and display drive.</li>
+                  <li>Two-layer board with ground pour, plus polyfuse and TVS diode input protection.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="pcb-project__viewer">
+              <div class="pcb-viewer-shell" id="pcb-viewer-shell">
+                <model-viewer
+                  id="pcb-viewer"
+                  class="pcb-viewer"
+                  src="pcb.glb"
+                  alt="Interactive 3D PCB model of the USB-C inline power meter."
+                  loading="lazy"
+                  camera-controls
+                  touch-action="pan-y"
+                  interaction-prompt="auto"
+                  tone-mapping="aces"
+                  exposure="1.08"
+                  shadow-intensity="0.65"
+                  camera-orbit="35deg 70deg 120%"
+                  field-of-view="28deg"
+                >
+                  <div class="pcb-viewer__loading" slot="poster">
+                    <div class="pcb-viewer__spinner" aria-hidden="true"></div>
+                    <span>Loading 3D PCB</span>
+                  </div>
+                </model-viewer>
+
+                <button
+                  class="pcb-viewer__fullscreen"
+                  type="button"
+                  aria-label="Toggle fullscreen"
+                  data-fullscreen-target="pcb-viewer-shell"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5" />
+                  </svg>
+                </button>
+              </div>
+
+              <p class="pcb-viewer__hint">
+                Drag to rotate, scroll to zoom, and pan with touch or right-click.
+              </p>
+            </div>
+          </article>
         </div>
       </div>
     </section>

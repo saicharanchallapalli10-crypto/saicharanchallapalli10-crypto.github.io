@@ -302,6 +302,11 @@ a {
   padding-top: clamp(4rem, 9vw, 7rem);
 }
 
+.content-block--projects {
+  width: min(100%, 1180px);
+  gap: 1.8rem;
+}
+
 .content-block--about {
   gap: 1.75rem;
 }
@@ -317,6 +322,202 @@ a {
 .project-list {
   display: grid;
   gap: 1.1rem;
+}
+
+.pcb-project {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+  gap: clamp(1.2rem, 3vw, 2rem);
+  align-items: start;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02)),
+    rgba(4, 9, 21, 0.62);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.24);
+}
+
+.pcb-project__copy {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(0.25rem, 0.6vw, 0.5rem);
+}
+
+.pcb-project__eyebrow,
+.pcb-project__subhead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.pcb-project__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: -0.06em;
+  line-height: 0.96;
+}
+
+.pcb-project__lede {
+  margin: 0;
+  max-width: 62ch;
+  color: rgba(232, 238, 255, 0.78);
+  font-size: clamp(1rem, 1.35vw, 1.08rem);
+  line-height: 1.8;
+}
+
+.pcb-project__stats {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.pcb-stat {
+  display: grid;
+  gap: 0.25rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pcb-stat__label {
+  color: rgba(239, 243, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.pcb-stat__value {
+  color: rgba(232, 238, 255, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.pcb-project__details {
+  display: grid;
+  gap: 0.9rem;
+  padding-top: 0.2rem;
+}
+
+.pcb-project__list {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  color: rgba(232, 238, 255, 0.74);
+  line-height: 1.7;
+}
+
+.pcb-project__list li::marker {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.pcb-project__viewer {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.pcb-viewer-shell {
+  position: relative;
+  min-height: clamp(28rem, 58vw, 38rem);
+  border-radius: 1.35rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+}
+
+.pcb-viewer {
+  width: 100%;
+  height: 100%;
+  min-height: clamp(28rem, 58vw, 38rem);
+  --poster-color: transparent;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.06), transparent 54%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+.pcb-viewer::part(default-progress-bar) {
+  height: 0.25rem;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(232, 240, 255, 0.9), rgba(255, 255, 255, 0.2));
+}
+
+.pcb-viewer__loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 0.85rem;
+  color: rgba(247, 250, 255, 0.92);
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05), rgba(7, 14, 30, 0.1) 60%, rgba(7, 14, 30, 0.18));
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pcb-viewer__spinner {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.14);
+  border-top-color: rgba(255, 255, 255, 0.9);
+  animation: spin 900ms linear infinite;
+}
+
+.pcb-viewer-shell.is-loaded .pcb-viewer__loading {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 180ms var(--ease-soft), visibility 0s linear 180ms;
+}
+
+.pcb-viewer__fullscreen {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: rgba(247, 250, 255, 0.88);
+  background: rgba(5, 10, 21, 0.44);
+  backdrop-filter: blur(16px);
+  transition:
+    transform 220ms var(--ease-out),
+    background 220ms var(--ease-soft),
+    border-color 220ms var(--ease-soft),
+    color 220ms var(--ease-soft);
+}
+
+.pcb-viewer__fullscreen svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.pcb-viewer__fullscreen:hover,
+.pcb-viewer__fullscreen:focus-visible {
+  transform: scale(1.04);
+  background: rgba(5, 10, 21, 0.62);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.pcb-viewer__hint {
+  margin: 0;
+  color: rgba(232, 238, 255, 0.68);
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
 .project-item {
@@ -444,6 +645,12 @@ a:focus-visible {
   }
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 900px) {
   body {
     overflow: auto;
@@ -460,6 +667,19 @@ a:focus-visible {
 
   .content-block {
     padding-top: 5.6rem;
+  }
+
+  .pcb-project {
+    grid-template-columns: 1fr;
+  }
+
+  .pcb-viewer-shell,
+  .pcb-viewer {
+    min-height: clamp(20rem, 62vw, 28rem);
+  }
+
+  .pcb-project__viewer {
+    order: -1;
   }
 }
 
@@ -552,6 +772,11 @@ a:focus-visible {
       transform: translate(4vw, -4vh);
     }
   }
+
+  .pcb-project {
+    padding: 0.9rem;
+    border-radius: 1.25rem;
+  }
 }
 
 @media (max-width: 640px) {
@@ -577,6 +802,18 @@ a:focus-visible {
 
   .detail-lines {
     gap: 0.85rem;
+  }
+
+  .pcb-viewer-shell,
+  .pcb-viewer {
+    min-height: clamp(18rem, 78vw, 24rem);
+  }
+
+  .pcb-viewer__fullscreen {
+    top: 0.65rem;
+    right: 0.65rem;
+    width: 2.4rem;
+    height: 2.4rem;
   }
 }
 
@@ -668,6 +905,22 @@ a:focus-visible {
     100% {
       transform: translate(2vw, -3vh);
     }
+  }
+
+  .pcb-project__title {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+  }
+
+  .pcb-project__lede,
+  .pcb-stat__value,
+  .pcb-project__list,
+  .pcb-viewer__hint {
+    font-size: 0.95rem;
+  }
+
+  .pcb-viewer-shell,
+  .pcb-viewer {
+    min-height: clamp(15rem, 72vw, 20rem);
   }
 }
 

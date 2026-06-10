@@ -70,27 +70,18 @@
             <div class="pcb-project__copy">
               <p class="pcb-project__eyebrow">Hardware / Embedded</p>
               <h3 class="pcb-project__title">USB-C Inline Power Meter</h3>
+              <div class="pcb-project__chips" aria-label="Project status">
+                <span class="pcb-chip">Completed: June 8th, 2025</span>
+                <span class="pcb-chip">Assembling: TBD</span>
+              </div>
               <p class="pcb-project__lede">
                 Designed a pass-through USB-C power meter that measures real-time
-                voltage, current, and power delivered to charging devices. The
-                device sits between a USB-PD charger and a sink, such as an iPhone,
-                and displays measurements on a 0.96&quot; OLED.
+                voltage, current, and power delivered to charging devices. The goal
+                of the PCB is to monitor power delivery to devices such as an iPhone
+                or other USB-powered electronics while charging, operating within
+                the USB-C Power Delivery range. The device sits between a USB-PD
+                charger and a sink and displays measurements on a 0.96-inch OLED.
               </p>
-
-              <div class="pcb-project__stats" aria-label="Measurements displayed">
-                <div class="pcb-stat">
-                  <span class="pcb-stat__label">Voltage (V)</span>
-                  <span class="pcb-stat__value">Bus voltage between the charger and device</span>
-                </div>
-                <div class="pcb-stat">
-                  <span class="pcb-stat__label">Current (A)</span>
-                  <span class="pcb-stat__value">Current through the shunt resistor</span>
-                </div>
-                <div class="pcb-stat">
-                  <span class="pcb-stat__label">Power (W)</span>
-                  <span class="pcb-stat__value">Voltage × current, the actual delivered power</span>
-                </div>
-              </div>
 
               <div class="pcb-project__details">
                 <p class="pcb-project__subhead">Key design decisions</p>
@@ -116,9 +107,13 @@
                   touch-action="pan-y"
                   interaction-prompt="auto"
                   tone-mapping="aces"
-                  exposure="1.08"
-                  shadow-intensity="0.65"
-                  camera-orbit="35deg 70deg 120%"
+                  environment-image="neutral"
+                  exposure="0.98"
+                  shadow-intensity="0.42"
+                  camera-orbit="35deg 68deg 92%"
+                  camera-target="0.02m 0.01m 0m"
+                  min-camera-orbit="auto 35deg 72%"
+                  max-camera-orbit="auto 130deg 220%"
                   field-of-view="28deg"
                 >
                   <div class="pcb-viewer__loading" slot="poster">
@@ -138,6 +133,14 @@
                   </svg>
                 </button>
               </div>
+
+              <button
+                class="pcb-viewer__reset"
+                type="button"
+                data-reset-view
+              >
+                Reset View
+              </button>
 
               <p class="pcb-viewer__hint">
                 Drag to rotate, scroll to zoom, and pan with touch or right-click.
@@ -179,7 +182,7 @@
           <div class="detail-lines" aria-label="Details">
             <div class="detail-line">
               <span class="detail-line__label">Focus</span>
-              <span class="detail-line__value">Electrical Engineering, Product Thinking </span>
+              <span class="detail-line__value">Electrical Engineering, Product Thinking</span>
             </div>
             <div class="detail-line">
               <span class="detail-line__label">Location</span>

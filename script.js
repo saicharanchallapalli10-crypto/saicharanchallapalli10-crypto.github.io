@@ -19,9 +19,9 @@ const pcbViewerShell = document.querySelector("#pcb-viewer-shell");
 const fullscreenButton = document.querySelector("[data-fullscreen-target='pcb-viewer-shell']");
 const resetButton = document.querySelector("[data-reset-view]");
 const defaultCamera = {
-  orbit: "35deg 68deg 118%",
-  target: "0.02m 0.01m 0m",
-  fieldOfView: "28deg"
+  orbit: "16deg 80deg 84%",
+  target: "0.136m 0.0044m 0.097m",
+  fieldOfView: "22deg"
 };
 
 function getViewFromHash(hash) {

@@ -76,20 +76,22 @@
               </div>
               <p class="pcb-project__lede">
                 Designed a pass-through USB-C power meter that measures real-time
-                voltage, current, and power delivered to charging devices. The goal
-                of the PCB is to monitor power delivery to devices such as an iPhone
-                or other USB-powered electronics while charging, operating within
-                the USB-C Power Delivery range. The device sits between a USB-PD
-                charger and a sink and displays measurements on a 0.96-inch OLED.
+                voltage, current, and power delivered to charging devices. The PCB
+                sits between a USB-PD charger and a sink such as an iPhone, keeping
+                track of the bus voltage between them, the current flowing through a
+                precision shunt resistor, and the resulting power delivered to the
+                load. An INA226 performs the calibrated power calculations, and the
+                measurements are shown on a 0.96-inch OLED while charging within the
+                USB-C Power Delivery range.
               </p>
 
               <div class="pcb-project__details">
                 <p class="pcb-project__subhead">Key design decisions</p>
                 <ul class="pcb-project__list">
-                  <li>High-side current sensing with a 10mΩ shunt and TI INA226 over I²C.</li>
+                  <li>High-side current sensing with a 10 mOhm shunt and TI INA226 over I2C.</li>
                   <li>Wide-input TPS62933 buck regulator for the 3.3V rail across the full USB-PD range.</li>
                   <li>Passive CC1/CC2 pass-through to preserve USB-PD negotiation without disrupting handshake.</li>
-                  <li>Seeed XIAO RP2040 microcontroller for I²C control and display drive.</li>
+                  <li>Seeed XIAO RP2040 microcontroller for I2C control and display drive.</li>
                   <li>Two-layer board with ground pour, plus polyfuse and TVS diode input protection.</li>
                 </ul>
               </div>
@@ -108,13 +110,11 @@
                   interaction-prompt="auto"
                   tone-mapping="aces"
                   environment-image="neutral"
-                  exposure="0.98"
-                  shadow-intensity="0.42"
-                  camera-orbit="35deg 68deg 92%"
-                  camera-target="0.02m 0.01m 0m"
-                  min-camera-orbit="auto 35deg 72%"
-                  max-camera-orbit="auto 130deg 220%"
-                  field-of-view="28deg"
+                  exposure="1.0"
+                  shadow-intensity="0.38"
+                  camera-orbit="16deg 80deg 84%"
+                  camera-target="0.136m 0.0044m 0.097m"
+                  field-of-view="22deg"
                 >
                   <div class="pcb-viewer__loading" slot="poster">
                     <div class="pcb-viewer__spinner" aria-hidden="true"></div>

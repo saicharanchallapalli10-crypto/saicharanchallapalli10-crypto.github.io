@@ -25,6 +25,8 @@
     <div class="background__spotlight background__spotlight--one"></div>
     <div class="background__spotlight background__spotlight--two"></div>
     <div class="background__spotlight background__spotlight--three"></div>
+    <div class="background__spotlight background__spotlight--four"></div>
+    <div class="background__spotlight background__spotlight--five"></div>
     <div class="background__noise"></div>
     <div class="background__vignette"></div>
   </div>
@@ -42,7 +44,21 @@
             <span>Challapalli</span>
           </h1>
           <nav class="hero__nav" aria-label="Primary">
-            <a class="minimal-link" href="#/projects">Projects</a>
+            <div class="nav-dropdown" data-projects-menu>
+              <button
+                class="minimal-link minimal-link--button"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                data-projects-toggle
+              >
+                Projects
+              </button>
+              <div class="project-dropdown" role="menu" aria-label="Projects">
+                <a href="#/projects" role="menuitem">Personal Projects</a>
+                <a href="#/group-projects" role="menuitem">Group Projects</a>
+              </div>
+            </div>
             <a class="minimal-link" href="#/about">About Me</a>
           </nav>
         </div>
@@ -71,13 +87,14 @@
               <p class="pcb-project__eyebrow">Hardware / Embedded</p>
               <h3 class="pcb-project__title">USB-C Inline Power Meter</h3>
               <div class="pcb-project__chips" aria-label="Project status">
-                <span class="pcb-chip">Completed: June 8th, 2026</span>
+                <span class="pcb-chip">Started: May 10th, 2025</span>
+                <span class="pcb-chip">Completed: June 8th, 2025</span>
                 <span class="pcb-chip">Assembling: TBD</span>
               </div>
               <p class="pcb-project__lede">
-                I Designed a pass-through USB-C power meter in Kicad that measures real-time
+                I designed a pass-through USB-C power meter in KiCad that measures real-time
                 voltage, current, and power delivered to charging devices. An INA226 performs the power calculations, and the
-                measurements are shown on a 0.96 inch OLED while charging within the
+                measurements are shown on a 0.96-inch OLED while charging within the
                 USB-C Power Delivery range. In total, the PCB I designed and manufactured 
                 measures voltage, current, and power flowing between a USB-C charger and a connected device, 
                 displaying real-time readings on a small screen. 
@@ -144,6 +161,30 @@
               </p>
             </div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="view view--subpage"
+      data-view="group-projects"
+      aria-labelledby="group-projects-title"
+      aria-hidden="true"
+    >
+      <a class="back-link" href="#/" aria-label="Back to homepage">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M15 5 8 12l7 7" />
+        </svg>
+      </a>
+
+      <div class="view__inner">
+        <div class="content-block content-block--about">
+          <p class="section-label">Collaborative Work</p>
+          <h2 class="section-title" id="group-projects-title">Group Projects</h2>
+
+          <p class="placeholder-copy">
+            This section is currently under development and will be updated in the future.
+          </p>
         </div>
       </div>
     </section>

@@ -26,9 +26,9 @@ const projectMenuLinks = [...document.querySelectorAll(".project-dropdown a")];
 const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 let projectsMenuCloseTimer = null;
 const defaultCamera = {
-  orbit: "18deg 87deg 90%",
+  orbit: "18deg 64deg 94%",
   target: "0.136m 0.0044m 0.097m",
-  fieldOfView: "18deg"
+  fieldOfView: "20deg"
 };
 
 function getViewFromHash(hash) {

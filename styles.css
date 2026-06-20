@@ -840,6 +840,10 @@ button:focus-visible {
 @media (max-width: 900px) {
   body {
     overflow: auto;
+    /* Lighten the mobile backdrop so it matches the desktop feel rather than reading as overly dark. */
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.1), transparent 42%),
+      linear-gradient(180deg, #15294c 0%, #102341 55%, #0c1a34 100%);
   }
 
   .view {
@@ -874,165 +878,61 @@ button:focus-visible {
 }
 
 @media (max-width: 768px) {
+  /*
+   * Mobile bubbles: larger and brighter than before, and noticeably faster.
+   * Sizes/blur are tuned up here, while the brighter desktop bubbleDrift
+   * keyframes (defined above) are intentionally left to drive opacity and
+   * motion so the field feels as alive and luminous as the desktop version.
+   * Shorter animation-duration values speed the drift up on mobile.
+   */
   .background__spotlight--one {
     top: -3rem;
     left: -2rem;
-    width: clamp(9rem, 26vw, 13rem);
-    height: clamp(9rem, 26vw, 13rem);
-    --bubble-blur: 36px;
-    --bubble-opacity: 0.31;
+    width: clamp(12rem, 34vw, 17rem);
+    height: clamp(12rem, 34vw, 17rem);
+    --bubble-blur: 52px;
+    --bubble-opacity: 0.34;
+    animation-duration: 28s;
   }
 
   .background__spotlight--two {
     top: 8%;
     right: -2.5rem;
-    width: clamp(8.5rem, 24vw, 12rem);
-    height: clamp(8.5rem, 24vw, 12rem);
-    --bubble-blur: 34px;
-    --bubble-opacity: 0.3;
+    width: clamp(11rem, 32vw, 16rem);
+    height: clamp(11rem, 32vw, 16rem);
+    --bubble-blur: 48px;
+    --bubble-opacity: 0.33;
+    animation-duration: 34s;
   }
 
   .background__spotlight--three {
     bottom: -3.5rem;
     left: 10%;
-    width: clamp(10rem, 28vw, 13.5rem);
-    height: clamp(10rem, 28vw, 13.5rem);
-    --bubble-blur: 38px;
-    --bubble-opacity: 0.28;
+    width: clamp(13rem, 36vw, 18rem);
+    height: clamp(13rem, 36vw, 18rem);
+    --bubble-blur: 54px;
+    --bubble-opacity: 0.31;
+    animation-duration: 38s;
   }
 
   .background__spotlight--four {
     top: 54%;
     right: 10%;
-    width: clamp(5.5rem, 16vw, 8rem);
-    height: clamp(5.5rem, 16vw, 8rem);
-    --bubble-blur: 24px;
-    --bubble-opacity: 0.21;
+    width: clamp(7rem, 20vw, 10rem);
+    height: clamp(7rem, 20vw, 10rem);
+    --bubble-blur: 34px;
+    --bubble-opacity: 0.24;
+    animation-duration: 30s;
   }
 
   .background__spotlight--five {
     top: 18%;
     left: 50%;
-    width: clamp(4.5rem, 14vw, 6.8rem);
-    height: clamp(4.5rem, 14vw, 6.8rem);
-    --bubble-blur: 20px;
-    --bubble-opacity: 0.19;
-  }
-
-  @keyframes bubbleDriftOne {
-    0%,
-    100% {
-      opacity: 0.23;
-      transform: translate3d(-2vw, -2vh, 0) scale(1);
-    }
-    18% {
-      opacity: 0.3;
-      transform: translate3d(12vw, 5vh, 0) scale(1.06);
-    }
-    37% {
-      opacity: 0.2;
-      transform: translate3d(6vw, 17vh, 0) scale(0.96);
-    }
-    58% {
-      opacity: 0.28;
-      transform: translate3d(18vw, 12vh, 0) scale(1.03);
-    }
-    79% {
-      opacity: 0.21;
-      transform: translate3d(10vw, -5vh, 0) scale(0.98);
-    }
-  }
-
-  @keyframes bubbleDriftTwo {
-    0%,
-    100% {
-      opacity: 0.22;
-      transform: translate3d(3vw, -3vh, 0) scale(0.96);
-    }
-    16% {
-      opacity: 0.28;
-      transform: translate3d(-8vw, 8vh, 0) scale(1.06);
-    }
-    39% {
-      opacity: 0.2;
-      transform: translate3d(-15vw, 17vh, 0) scale(0.94);
-    }
-    63% {
-      opacity: 0.27;
-      transform: translate3d(-5vw, 24vh, 0) scale(1.03);
-    }
-    82% {
-      opacity: 0.18;
-      transform: translate3d(-13vw, 2vh, 0) scale(0.98);
-    }
-  }
-
-  @keyframes bubbleDriftThree {
-    0%,
-    100% {
-      opacity: 0.21;
-      transform: translate3d(0vw, 5vh, 0) scale(1.02);
-    }
-    21% {
-      opacity: 0.27;
-      transform: translate3d(11vw, -8vh, 0) scale(0.95);
-    }
-    43% {
-      opacity: 0.19;
-      transform: translate3d(19vw, 6vh, 0) scale(1.06);
-    }
-    66% {
-      opacity: 0.25;
-      transform: translate3d(7vw, -14vh, 0) scale(0.97);
-    }
-    84% {
-      opacity: 0.18;
-      transform: translate3d(15vw, 13vh, 0) scale(1.03);
-    }
-  }
-
-  @keyframes bubbleDriftFour {
-    0%,
-    100% {
-      opacity: 0.16;
-      transform: translate3d(0vw, 0vh, 0) scale(0.9);
-    }
-    24% {
-      opacity: 0.2;
-      transform: translate3d(-11vw, -10vh, 0) scale(1.08);
-    }
-    48% {
-      opacity: 0.14;
-      transform: translate3d(-18vw, 4vh, 0) scale(0.96);
-    }
-    72% {
-      opacity: 0.19;
-      transform: translate3d(-5vw, 12vh, 0) scale(1.02);
-    }
-  }
-
-  @keyframes bubbleDriftFive {
-    0%,
-    100% {
-      opacity: 0.14;
-      transform: translate3d(0vw, 0vh, 0) scale(1);
-    }
-    19% {
-      opacity: 0.18;
-      transform: translate3d(8vw, 9vh, 0) scale(0.9);
-    }
-    42% {
-      opacity: 0.12;
-      transform: translate3d(-6vw, 17vh, 0) scale(1.08);
-    }
-    67% {
-      opacity: 0.17;
-      transform: translate3d(-14vw, 6vh, 0) scale(0.95);
-    }
-    86% {
-      opacity: 0.13;
-      transform: translate3d(-4vw, -8vh, 0) scale(1.04);
-    }
+    width: clamp(6rem, 18vw, 8.5rem);
+    height: clamp(6rem, 18vw, 8.5rem);
+    --bubble-blur: 30px;
+    --bubble-opacity: 0.22;
+    animation-duration: 25s;
   }
 
   .pcb-project {
@@ -1046,9 +946,11 @@ button:focus-visible {
     gap: 1.3rem;
   }
 
+  /* Keep "Projects" and "About Me" side-by-side on mobile. */
   .hero__nav {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: clamp(1.6rem, 9vw, 2.75rem);
   }
 
   .minimal-link--button {
@@ -1056,36 +958,15 @@ button:focus-visible {
     padding: 0.7rem 0.35rem;
   }
 
-  .nav-dropdown {
-    display: grid;
-    justify-items: center;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-
+  /*
+   * The Projects menu stays an absolutely-positioned overlay on mobile (rather
+   * than a static block that reflows the layout). It animates with opacity +
+   * transform only, so tapping it open/closed is smooth with no layout shift,
+   * flicker, or jump. min-width is clamped so it never overflows the viewport.
+   */
   .project-dropdown {
-    position: static;
-    display: none;
     min-width: min(13rem, calc(100vw - 2rem));
-    margin-top: 0;
-    opacity: 1;
-    pointer-events: none;
-    transform: none;
-  }
-
-  .nav-dropdown:hover .project-dropdown,
-  .nav-dropdown:focus-within .project-dropdown,
-  .nav-dropdown.is-open .project-dropdown {
-    display: grid;
-    gap: 0.18rem;
-    margin-top: 0.45rem;
-    padding: 0.45rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0.95rem;
-    background: rgba(5, 11, 24, 0.72);
-    backdrop-filter: blur(18px);
-    pointer-events: auto;
-    transform: none;
+    max-width: calc(100vw - 1.5rem);
   }
 
   .back-link {
@@ -1118,165 +999,55 @@ button:focus-visible {
 }
 
 @media (max-width: 480px) {
+  /*
+   * Smallest screens: keep the enlarged, faster bubbles from the 768px rules
+   * (sizes below are bumped up from the old tiny values) and let the shared
+   * brighter keyframes drive opacity/motion. Blur scales with size so the
+   * bubbles stay soft and atmospheric without blooming into white blobs.
+   */
   .background__spotlight--one {
     top: -1.8rem;
     left: -1.4rem;
-    width: clamp(5.8rem, 22vw, 7.2rem);
-    height: clamp(5.8rem, 22vw, 7.2rem);
-    --bubble-blur: 20px;
-    --bubble-opacity: 0.24;
+    width: clamp(8rem, 30vw, 10.5rem);
+    height: clamp(8rem, 30vw, 10.5rem);
+    --bubble-blur: 30px;
+    --bubble-opacity: 0.3;
   }
 
   .background__spotlight--two {
     top: 8%;
     right: -1.6rem;
-    width: clamp(5.6rem, 21vw, 6.9rem);
-    height: clamp(5.6rem, 21vw, 6.9rem);
-    --bubble-blur: 20px;
-    --bubble-opacity: 0.23;
+    width: clamp(7.5rem, 29vw, 10rem);
+    height: clamp(7.5rem, 29vw, 10rem);
+    --bubble-blur: 30px;
+    --bubble-opacity: 0.29;
   }
 
   .background__spotlight--three {
     bottom: -2rem;
     left: 15%;
-    width: clamp(6rem, 24vw, 7.4rem);
-    height: clamp(6rem, 24vw, 7.4rem);
-    --bubble-blur: 21px;
-    --bubble-opacity: 0.22;
+    width: clamp(8.5rem, 32vw, 11rem);
+    height: clamp(8.5rem, 32vw, 11rem);
+    --bubble-blur: 32px;
+    --bubble-opacity: 0.27;
   }
 
   .background__spotlight--four {
     top: 56%;
     right: 12%;
-    width: clamp(3.2rem, 11vw, 4.2rem);
-    height: clamp(3.2rem, 11vw, 4.2rem);
-    --bubble-blur: 13px;
-    --bubble-opacity: 0.17;
+    width: clamp(4.5rem, 15vw, 6rem);
+    height: clamp(4.5rem, 15vw, 6rem);
+    --bubble-blur: 20px;
+    --bubble-opacity: 0.22;
   }
 
   .background__spotlight--five {
     top: 20%;
     left: 48%;
-    width: clamp(3rem, 10vw, 4rem);
-    height: clamp(3rem, 10vw, 4rem);
-    --bubble-blur: 12px;
-    --bubble-opacity: 0.16;
-  }
-
-  @keyframes bubbleDriftOne {
-    0%,
-    100% {
-      opacity: 0.15;
-      transform: translate3d(-1vw, -1vh, 0) scale(1);
-    }
-    18% {
-      opacity: 0.2;
-      transform: translate3d(8vw, 4vh, 0) scale(1.05);
-    }
-    37% {
-      opacity: 0.13;
-      transform: translate3d(4vw, 11vh, 0) scale(0.96);
-    }
-    58% {
-      opacity: 0.19;
-      transform: translate3d(11vw, 8vh, 0) scale(1.02);
-    }
-    79% {
-      opacity: 0.14;
-      transform: translate3d(6vw, -3vh, 0) scale(0.98);
-    }
-  }
-
-  @keyframes bubbleDriftTwo {
-    0%,
-    100% {
-      opacity: 0.15;
-      transform: translate3d(2vw, -2vh, 0) scale(0.96);
-    }
-    16% {
-      opacity: 0.2;
-      transform: translate3d(-6vw, 6vh, 0) scale(1.05);
-    }
-    39% {
-      opacity: 0.13;
-      transform: translate3d(-9vw, 11vh, 0) scale(0.94);
-    }
-    63% {
-      opacity: 0.18;
-      transform: translate3d(-3vw, 15vh, 0) scale(1.02);
-    }
-    82% {
-      opacity: 0.12;
-      transform: translate3d(-8vw, 1vh, 0) scale(0.98);
-    }
-  }
-
-  @keyframes bubbleDriftThree {
-    0%,
-    100% {
-      opacity: 0.14;
-      transform: translate3d(0vw, 4vh, 0) scale(1.02);
-    }
-    21% {
-      opacity: 0.18;
-      transform: translate3d(8vw, -5vh, 0) scale(0.96);
-    }
-    43% {
-      opacity: 0.12;
-      transform: translate3d(11vw, 4vh, 0) scale(1.05);
-    }
-    66% {
-      opacity: 0.17;
-      transform: translate3d(4vw, -8vh, 0) scale(0.97);
-    }
-    84% {
-      opacity: 0.11;
-      transform: translate3d(9vw, 8vh, 0) scale(1.02);
-    }
-  }
-
-  @keyframes bubbleDriftFour {
-    0%,
-    100% {
-      opacity: 0.14;
-      transform: translate3d(0vw, 0vh, 0) scale(0.9);
-    }
-    24% {
-      opacity: 0.18;
-      transform: translate3d(-8vw, -7vh, 0) scale(1.06);
-    }
-    48% {
-      opacity: 0.12;
-      transform: translate3d(-12vw, 3vh, 0) scale(0.96);
-    }
-    72% {
-      opacity: 0.17;
-      transform: translate3d(-3vw, 8vh, 0) scale(1.02);
-    }
-  }
-
-  @keyframes bubbleDriftFive {
-    0%,
-    100% {
-      opacity: 0.12;
-      transform: translate3d(0vw, 0vh, 0) scale(1);
-    }
-    19% {
-      opacity: 0.16;
-      transform: translate3d(6vw, 6vh, 0) scale(0.9);
-    }
-    42% {
-      opacity: 0.1;
-      transform: translate3d(-4vw, 11vh, 0) scale(1.07);
-    }
-    67% {
-      opacity: 0.15;
-      transform: translate3d(-9vw, 4vh, 0) scale(0.95);
-    }
-    86% {
-      opacity: 0.11;
-      transform: translate3d(-3vw, -5vh, 0) scale(1.03);
-    }
+    width: clamp(4.2rem, 14vw, 5.6rem);
+    height: clamp(4.2rem, 14vw, 5.6rem);
+    --bubble-blur: 18px;
+    --bubble-opacity: 0.2;
   }
 
   .pcb-project__title {

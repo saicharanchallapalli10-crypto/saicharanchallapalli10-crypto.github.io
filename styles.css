@@ -91,8 +91,8 @@ button {
   width: clamp(16rem, 25vw, 28rem);
   height: clamp(16rem, 25vw, 28rem);
   --bubble-blur: 64px;
-  --bubble-opacity: 0.32;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.48) 0%, rgba(220, 232, 255, 0.28) 38%, rgba(220, 232, 255, 0.07) 66%, rgba(220, 232, 255, 0) 78%);
+  --bubble-opacity: 0.36;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.54) 0%, rgba(220, 232, 255, 0.32) 38%, rgba(220, 232, 255, 0.1) 66%, rgba(220, 232, 255, 0) 78%);
   animation: bubbleDriftOne 44s infinite linear;
   animation-delay: -8s;
 }
@@ -103,8 +103,8 @@ button {
   width: clamp(14rem, 23vw, 25rem);
   height: clamp(14rem, 23vw, 25rem);
   --bubble-blur: 58px;
-  --bubble-opacity: 0.3;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0%, rgba(220, 232, 255, 0.27) 34%, rgba(220, 232, 255, 0.08) 64%, rgba(220, 232, 255, 0) 78%);
+  --bubble-opacity: 0.34;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(220, 232, 255, 0.3) 34%, rgba(220, 232, 255, 0.1) 64%, rgba(220, 232, 255, 0) 78%);
   animation: bubbleDriftTwo 53s infinite linear;
   animation-delay: -19s;
 }
@@ -115,8 +115,8 @@ button {
   width: clamp(15rem, 22vw, 26rem);
   height: clamp(15rem, 22vw, 26rem);
   --bubble-blur: 66px;
-  --bubble-opacity: 0.27;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.44) 0%, rgba(220, 232, 255, 0.25) 40%, rgba(220, 232, 255, 0.07) 66%, rgba(220, 232, 255, 0) 78%);
+  --bubble-opacity: 0.31;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.52) 0%, rgba(220, 232, 255, 0.29) 40%, rgba(220, 232, 255, 0.1) 66%, rgba(220, 232, 255, 0) 78%);
   animation: bubbleDriftThree 61s infinite linear;
   animation-delay: -31s;
 }
@@ -127,8 +127,8 @@ button {
   width: clamp(7rem, 12vw, 13rem);
   height: clamp(7rem, 12vw, 13rem);
   --bubble-blur: 34px;
-  --bubble-opacity: 0.2;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(220, 232, 255, 0.22) 46%, rgba(220, 232, 255, 0.06) 70%, rgba(220, 232, 255, 0) 82%);
+  --bubble-opacity: 0.23;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.56) 0%, rgba(220, 232, 255, 0.26) 46%, rgba(220, 232, 255, 0.08) 70%, rgba(220, 232, 255, 0) 82%);
   animation: bubbleDriftFour 47s infinite linear;
   animation-delay: -14s;
 }
@@ -139,14 +139,14 @@ button {
   width: clamp(5.5rem, 9vw, 10rem);
   height: clamp(5.5rem, 9vw, 10rem);
   --bubble-blur: 30px;
-  --bubble-opacity: 0.18;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.46) 0%, rgba(220, 232, 255, 0.2) 48%, rgba(220, 232, 255, 0.05) 70%, rgba(220, 232, 255, 0) 82%);
+  --bubble-opacity: 0.21;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(220, 232, 255, 0.23) 48%, rgba(220, 232, 255, 0.07) 70%, rgba(220, 232, 255, 0) 82%);
   animation: bubbleDriftFive 39s infinite linear;
   animation-delay: -23s;
 }
 
 .background__noise {
-  opacity: 0.045;
+  opacity: 0.055;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='18' cy='14' r='0.8' opacity='0.26'/%3E%3Ccircle cx='68' cy='52' r='0.6' opacity='0.18'/%3E%3Ccircle cx='118' cy='28' r='0.7' opacity='0.14'/%3E%3Ccircle cx='36' cy='94' r='0.75' opacity='0.2'/%3E%3Ccircle cx='144' cy='108' r='0.9' opacity='0.16'/%3E%3Ccircle cx='88' cy='140' r='0.7' opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
   mix-blend-mode: screen;
 }
@@ -248,6 +248,8 @@ button {
   position: relative;
   display: inline-flex;
   justify-content: center;
+  padding-bottom: 0.7rem;
+  margin-bottom: -0.7rem;
 }
 
 .minimal-link {
@@ -300,7 +302,7 @@ button {
 
 .project-dropdown {
   position: absolute;
-  top: calc(100% + 0.8rem);
+  top: calc(100% + 0.35rem);
   left: 50%;
   z-index: 4;
   display: grid;
@@ -874,46 +876,46 @@ button:focus-visible {
   .background__spotlight--one {
     top: -3rem;
     left: -2rem;
-    width: clamp(8rem, 24vw, 11rem);
-    height: clamp(8rem, 24vw, 11rem);
-    --bubble-blur: 34px;
-    --bubble-opacity: 0.28;
+    width: clamp(9rem, 26vw, 13rem);
+    height: clamp(9rem, 26vw, 13rem);
+    --bubble-blur: 36px;
+    --bubble-opacity: 0.31;
   }
 
   .background__spotlight--two {
     top: 8%;
     right: -2.5rem;
-    width: clamp(7.5rem, 23vw, 10.5rem);
-    height: clamp(7.5rem, 23vw, 10.5rem);
-    --bubble-blur: 32px;
-    --bubble-opacity: 0.26;
+    width: clamp(8.5rem, 24vw, 12rem);
+    height: clamp(8.5rem, 24vw, 12rem);
+    --bubble-blur: 34px;
+    --bubble-opacity: 0.3;
   }
 
   .background__spotlight--three {
     bottom: -3.5rem;
     left: 10%;
-    width: clamp(9rem, 25vw, 12rem);
-    height: clamp(9rem, 25vw, 12rem);
-    --bubble-blur: 36px;
-    --bubble-opacity: 0.24;
+    width: clamp(10rem, 28vw, 13.5rem);
+    height: clamp(10rem, 28vw, 13.5rem);
+    --bubble-blur: 38px;
+    --bubble-opacity: 0.28;
   }
 
   .background__spotlight--four {
     top: 54%;
     right: 10%;
-    width: clamp(4.75rem, 15vw, 7.25rem);
-    height: clamp(4.75rem, 15vw, 7.25rem);
-    --bubble-blur: 22px;
-    --bubble-opacity: 0.18;
+    width: clamp(5.5rem, 16vw, 8rem);
+    height: clamp(5.5rem, 16vw, 8rem);
+    --bubble-blur: 24px;
+    --bubble-opacity: 0.21;
   }
 
   .background__spotlight--five {
     top: 18%;
     left: 50%;
-    width: clamp(3.75rem, 13vw, 6rem);
-    height: clamp(3.75rem, 13vw, 6rem);
-    --bubble-blur: 18px;
-    --bubble-opacity: 0.16;
+    width: clamp(4.5rem, 14vw, 6.8rem);
+    height: clamp(4.5rem, 14vw, 6.8rem);
+    --bubble-blur: 20px;
+    --bubble-opacity: 0.19;
   }
 
   @keyframes bubbleDriftOne {
@@ -1051,16 +1053,15 @@ button:focus-visible {
   .nav-dropdown {
     display: grid;
     justify-items: center;
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
 
   .project-dropdown {
     position: static;
-    min-width: min(13rem, calc(100vw - 3rem));
-    max-height: 0;
+    display: none;
+    min-width: min(13rem, calc(100vw - 2rem));
     margin-top: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    overflow: hidden;
     opacity: 1;
     pointer-events: none;
     transform: none;
@@ -1069,10 +1070,14 @@ button:focus-visible {
   .nav-dropdown:hover .project-dropdown,
   .nav-dropdown:focus-within .project-dropdown,
   .nav-dropdown.is-open .project-dropdown {
-    max-height: 8rem;
+    display: grid;
+    gap: 0.18rem;
     margin-top: 0.45rem;
-    padding-top: 0.45rem;
-    padding-bottom: 0.45rem;
+    padding: 0.45rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.95rem;
+    background: rgba(5, 11, 24, 0.72);
+    backdrop-filter: blur(18px);
     pointer-events: auto;
     transform: none;
   }
@@ -1086,6 +1091,7 @@ button:focus-visible {
 
   .content-block {
     gap: 1.35rem;
+    padding-top: 4.8rem;
   }
 
   .detail-lines {
@@ -1094,7 +1100,7 @@ button:focus-visible {
 
   .pcb-viewer-shell,
   .pcb-viewer {
-    min-height: clamp(16rem, 74vw, 22rem);
+    min-height: clamp(17rem, 76vw, 23rem);
   }
 
   .pcb-viewer__fullscreen {
@@ -1105,50 +1111,56 @@ button:focus-visible {
   }
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .nav-dropdown:hover .project-dropdown {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
   .background__spotlight--one {
     top: -1.8rem;
     left: -1.4rem;
-    width: clamp(3.8rem, 18vw, 5.2rem);
-    height: clamp(3.8rem, 18vw, 5.2rem);
-    --bubble-blur: 16px;
-    --bubble-opacity: 0.18;
+    width: clamp(4.8rem, 21vw, 6.6rem);
+    height: clamp(4.8rem, 21vw, 6.6rem);
+    --bubble-blur: 18px;
+    --bubble-opacity: 0.21;
   }
 
   .background__spotlight--two {
     top: 8%;
     right: -1.6rem;
-    width: clamp(3.7rem, 18vw, 5rem);
-    height: clamp(3.7rem, 18vw, 5rem);
-    --bubble-blur: 15px;
-    --bubble-opacity: 0.18;
+    width: clamp(4.6rem, 20vw, 6.2rem);
+    height: clamp(4.6rem, 20vw, 6.2rem);
+    --bubble-blur: 18px;
+    --bubble-opacity: 0.2;
   }
 
   .background__spotlight--three {
     bottom: -2rem;
     left: 15%;
-    width: clamp(4.2rem, 20vw, 5.6rem);
-    height: clamp(4.2rem, 20vw, 5.6rem);
-    --bubble-blur: 17px;
-    --bubble-opacity: 0.17;
+    width: clamp(5rem, 22vw, 6.8rem);
+    height: clamp(5rem, 22vw, 6.8rem);
+    --bubble-blur: 19px;
+    --bubble-opacity: 0.19;
   }
 
   .background__spotlight--four {
     top: 56%;
     right: 12%;
-    width: clamp(2.7rem, 14vw, 3.8rem);
-    height: clamp(2.7rem, 14vw, 3.8rem);
-    --bubble-blur: 10px;
-    --bubble-opacity: 0.13;
+    width: clamp(2.8rem, 10vw, 3.8rem);
+    height: clamp(2.8rem, 10vw, 3.8rem);
+    --bubble-blur: 12px;
+    --bubble-opacity: 0.15;
   }
 
   .background__spotlight--five {
     top: 20%;
     left: 48%;
-    width: clamp(2.2rem, 12vw, 3.2rem);
-    height: clamp(2.2rem, 12vw, 3.2rem);
-    --bubble-blur: 8px;
-    --bubble-opacity: 0.12;
+    width: clamp(2.5rem, 9vw, 3.4rem);
+    height: clamp(2.5rem, 9vw, 3.4rem);
+    --bubble-blur: 11px;
+    --bubble-opacity: 0.14;
   }
 
   @keyframes bubbleDriftOne {

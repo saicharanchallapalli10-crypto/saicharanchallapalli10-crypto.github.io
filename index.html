@@ -92,19 +92,22 @@
                 <span class="pcb-chip">Assembly in progress!</span>
               </div>
               <p class="pcb-project__lede">
-                I designed a pass-through USB-C power meter in KiCad that measures
-                voltage, current, and power delivered to USB-C devices. From the schematic
-                to the complete PCB layout and routing, I took on this project to learn more
-               about how USB-C Power Delivery works and how to design a PCB capable of
-               handling the power requirements of USB-C devices. I originally wanted to buy
-               a USB-C power meter to test my devices for fun, but then I thought,
-            "Why not design my own and learn something new in the process?"
+                I designed a pass-through USB-C power meter in KiCad that measures 
+                voltage, current, and power delivered to USB-C devices in real time. 
+                The design uses an INA226 for high-side current sensing across a 
+                10mΩ shunt, a wide-input buck regulator (TPS62933) to handle the 
+                full USB-PD voltage range (5V-20V), and an RP2040 driving an OLED 
+                display. I took this project on to learn how USB-C Power Delivery 
+                works at a low level and to get hands-on experience with PCB design 
+                — originally I just wanted to buy a USB-C power meter to test my 
+                devices, but figured why not use the opportunity to learn something new and build one myself!
               </p>
               <p>
-              From a simplified technical perspective, a power monitor measures the
-              voltage and current, calculates the power consumption, and displays the
-              measurements on a 0.96-inch screen while allowing the device to charge
-              within the USB-C Power Delivery specification.
+              From a high-level perspective, the power meter sits inline between 
+              a USB-C charger and a device, measuring the voltage and current 
+              flowing through VBUS in real time. It then displays all three values(voltage,current,power) on a OLED, while 
+              passing through the USB-C CC pins so USB Power Delivery negotiation 
+              between the charger and device still works normally.
               </p>
 
               <div class="pcb-project__details">

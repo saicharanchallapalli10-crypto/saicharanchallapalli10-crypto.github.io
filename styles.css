@@ -223,6 +223,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  font-style: normal;
 }
 
 .hero__name {
@@ -682,6 +683,7 @@ button {
 .about-copy {
   display: grid;
   gap: 1rem;
+  font-style: normal;
 }
 
 .detail-lines {
@@ -695,6 +697,7 @@ button {
   gap: 0.45rem;
   padding-top: 1rem;
   border-top: 1px solid var(--line);
+  font-style: normal;
 }
 
 .app[data-active-view="projects"] {

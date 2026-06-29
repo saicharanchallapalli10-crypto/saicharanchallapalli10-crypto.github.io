@@ -66,80 +66,73 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 .bubble {
-  position: fixed;
+  position: absolute;            /* anchored to the fixed .background — reliable on mobile */
   border-radius: 50%;
   mix-blend-mode: screen;
   pointer-events: none;
   will-change: transform;
+  /* Light softening only — the radial fills are already feathered, so we avoid the
+     heavy blur() radii that mobile GPUs drop and that washed the colour out. */
+  filter: blur(14px);
 }
 
 .bubble--1 {
-  width: 240px; height: 240px;
-  background: radial-gradient(circle, rgba(58, 79, 212, 0.38) 0%, transparent 70%);
-  top: -60px; left: -40px;
-  filter: blur(48px);
-  animation: drift1 44s infinite linear, blurPulse1 10s ease-in-out infinite;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(74, 98, 255, 0.50) 0%, rgba(74, 98, 255, 0.22) 42%, transparent 72%);
+  top: -50px; left: -30px;
+  animation: drift1 22s ease-in-out infinite;
 }
 .bubble--2 {
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(0, 201, 200, 0.30) 0%, transparent 70%);
-  top: 8%; right: -60px;
-  filter: blur(42px);
-  animation: drift2 53s infinite linear, blurPulse2 8s ease-in-out infinite;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(0, 224, 220, 0.46) 0%, rgba(0, 224, 220, 0.2) 42%, transparent 72%);
+  top: 8%; right: -50px;
+  animation: drift2 26s ease-in-out infinite;
 }
 .bubble--3 {
-  width: 270px; height: 270px;
-  background: radial-gradient(circle, rgba(120, 80, 255, 0.32) 0%, transparent 70%);
-  bottom: -80px; left: 14%;
-  filter: blur(54px);
-  animation: drift3 61s infinite linear;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(140, 90, 255, 0.48) 0%, rgba(140, 90, 255, 0.2) 42%, transparent 72%);
+  bottom: -70px; left: 14%;
+  animation: drift3 30s ease-in-out infinite;
 }
 .bubble--4 {
-  width: 130px; height: 130px;
-  background: radial-gradient(circle, rgba(0, 160, 255, 0.28) 0%, transparent 70%);
+  width: 150px; height: 150px;
+  background: radial-gradient(circle, rgba(0, 170, 255, 0.46) 0%, rgba(0, 170, 255, 0.2) 42%, transparent 72%);
   top: 55%; right: 16%;
-  filter: blur(34px);
-  animation: drift4 47s infinite linear;
+  animation: drift4 24s ease-in-out infinite;
 }
 .bubble--5 {
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, rgba(58, 79, 212, 0.30) 0%, transparent 70%);
+  width: 190px; height: 190px;
+  background: radial-gradient(circle, rgba(74, 98, 255, 0.46) 0%, rgba(74, 98, 255, 0.2) 42%, transparent 72%);
   top: 20%; left: 50%;
-  filter: blur(38px);
-  animation: drift5 39s infinite linear, blurPulse1 12s ease-in-out infinite;
-  animation-delay: 0s, -4s;
+  animation: drift5 20s ease-in-out infinite;
 }
 .bubble--6 {
-  width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(0, 201, 200, 0.24) 0%, transparent 70%);
+  width: 170px; height: 170px;
+  background: radial-gradient(circle, rgba(0, 224, 220, 0.42) 0%, rgba(0, 224, 220, 0.18) 42%, transparent 72%);
   bottom: 18%; right: 8%;
-  filter: blur(44px);
-  animation: drift6 57s infinite linear;
-  animation-delay: -12s;
+  animation: drift6 28s ease-in-out infinite;
+  animation-delay: -6s;
 }
 .bubble--7 {
-  width: 100px; height: 100px;
-  background: radial-gradient(circle, rgba(120, 80, 255, 0.30) 0%, transparent 70%);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(140, 90, 255, 0.46) 0%, rgba(140, 90, 255, 0.2) 42%, transparent 72%);
   top: 5%; left: 42%;
-  filter: blur(28px);
-  animation: drift7 43s infinite linear;
-  animation-delay: -22s;
+  animation: drift7 22s ease-in-out infinite;
+  animation-delay: -11s;
 }
 .bubble--8 {
-  width: 80px; height: 80px;
-  background: radial-gradient(circle, rgba(0, 160, 255, 0.32) 0%, transparent 70%);
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(0, 170, 255, 0.48) 0%, rgba(0, 170, 255, 0.2) 42%, transparent 72%);
   top: 42%; left: 7%;
-  filter: blur(26px);
-  animation: drift1 38s infinite linear reverse;
-  animation-delay: -17s;
+  animation: drift1 19s ease-in-out infinite reverse;
+  animation-delay: -9s;
 }
 .bubble--9 {
-  width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(58, 79, 212, 0.26) 0%, transparent 70%);
+  width: 230px; height: 230px;
+  background: radial-gradient(circle, rgba(74, 98, 255, 0.42) 0%, rgba(74, 98, 255, 0.18) 42%, transparent 72%);
   bottom: 10%; left: 36%;
-  filter: blur(52px);
-  animation: drift3 50s infinite linear reverse;
-  animation-delay: -28s;
+  animation: drift3 25s ease-in-out infinite reverse;
+  animation-delay: -14s;
 }
 
 .background__noise {
@@ -1023,15 +1016,6 @@ button:focus-visible {
   85% { transform: translate3d(-15vw, 5vh, 0) scale(1.05); }
 }
 
-@keyframes blurPulse1 {
-  0%, 100% { filter: blur(40px); }
-  50% { filter: blur(70px); }
-}
-@keyframes blurPulse2 {
-  0%, 100% { filter: blur(36px); }
-  50% { filter: blur(62px); }
-}
-
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ===== RESPONSIVE ===== */
@@ -1107,6 +1091,17 @@ button:focus-visible {
   .project-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Bubbles: lighter blur (mobile GPUs choke on big radii) + larger so a few
+     always read on a narrow viewport. Sizes use vw with px floors so they
+     never collapse to invisibility. */
+  .bubble { filter: blur(9px); }
+  .bubble--1 { width: min(70vw, 300px); height: min(70vw, 300px); }
+  .bubble--2 { width: min(64vw, 260px); height: min(64vw, 260px); }
+  .bubble--3 { width: min(76vw, 320px); height: min(76vw, 320px); }
+  .bubble--4 { width: min(46vw, 180px); height: min(46vw, 180px); }
+  .bubble--5 { width: min(58vw, 240px); height: min(58vw, 240px); }
+  .bubble--8 { width: min(38vw, 150px); height: min(38vw, 150px); }
 }
 
 @media (max-width: 640px) {

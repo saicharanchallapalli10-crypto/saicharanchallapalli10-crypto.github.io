@@ -1,239 +1,323 @@
-const viewTitles = {
-  home: "SaiCharan Challapalli",
-  projects: "Projects - SaiCharan Challapalli",
-  "group-projects": "Group Projects - SaiCharan Challapalli",
-  about: "About Me - SaiCharan Challapalli"
-};
+// ========== SITE CONFIG — Edit these ==========
+const OWNER_NAME    = "SaiCharan Challapalli";
+const CONTACT_EMAIL = "challapalli.si@northeastern.edu";       // ← Contact form sends here
+const DISPLAY_EMAIL = "challapalli.si@northeastern.edu";       // ← Shown in contact card
+const LINKEDIN_URL  = "#";                    // ← Your LinkedIn profile URL (footer)
+const GITHUB_URL    = "https://github.com/saicharanchallapalli10-crypto";                    // ← Your GitHub profile URL (footer)
+// ==============================================
 
-const routes = {
-  "": "home",
-  "#": "home",
-  "#/": "home",
-  "#/projects": "projects",
-  "#/group-projects": "group-projects",
-  "#/about": "about"
-};
+// ========== PROJECTS — Add/edit your projects here ==========
+// Adding a project to this array automatically renders a tile + detail view.
+const PROJECTS = [
+  {
+    name: "USB-C Inline Power Meter",
+    // 2–3 sentence brief shown on the TILE
+    shortDescription:
+      "A pass-through USB-C power meter that measures voltage, current, and power " +
+      "delivered to a device in real time and shows all three on an onboard OLED. " +
+      "Designed end-to-end in KiCad while keeping USB-PD negotiation fully intact.",
+    eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
+    // Detail-view body paragraphs (each renders as its own <p>)
+    paragraphs: [
+      "I designed a pass-through USB-C power meter in KiCad that measures voltage, current, and power delivered to USB-C devices in real time. The design uses an INA226 for high-side current sensing across a 10mΩ shunt, a wide-input buck regulator (TPS62933) to handle the full USB-PD voltage range (5V-20V), and an RP2040 driving an OLED display. I took this project on to learn how USB-C Power Delivery works at a low level and to get hands-on experience with PCB design — originally I just wanted to buy a USB-C power meter to test my devices, but figured why not use the opportunity to learn something new and build one myself!",
+      "From a high-level perspective, the power meter sits inline between a USB-C charger and a device, measuring the voltage and current flowing through VBUS in real time. It then displays all three values (voltage, current, power) on a OLED, while passing through the USB-C CC pins so USB Power Delivery negotiation between the charger and device still works normally.",
+    ],
+    chips: ["Started: May 10th, 2026", "Completed: June 8th, 2026", "Assembly in progress!"], // ← info chips in detail
+    keyDecisions: [                                          // ← "Key design decisions" bullets in detail
+      "High-side current sensing with a 10 mOhm shunt and TI INA226 over I2C.",
+      "Wide input TPS62933 buck regulator for the 3.3V rail across the full USB-PD range.",
+      "Passive CC1/CC2 pass-through to preserve USB-PD negotiation",
+      "Seeed XIAO RP2040 microcontroller for I2C control and display drive.",
+    ],
+    dateRange: "May 2026 - June 2026",            // ← shown on the tile
+    previewImage: "./images/usbc-preview.jpg",    // ← tile image + detail fallback when no 3D model
+    model3D: "pcb.glb",                           // ← 3D model path (.glb/.gltf), or null to use previewImage
+  },
+  // Add more projects here...
+];
+// =============================================================
 
-const app = document.querySelector(".app");
-const views = [...document.querySelectorAll(".view")];
-const pcbViewer = document.querySelector("#pcb-viewer");
-const pcbViewerShell = document.querySelector("#pcb-viewer-shell");
-const fullscreenButton = document.querySelector("[data-fullscreen-target='pcb-viewer-shell']");
-const resetButton = document.querySelector("[data-reset-view]");
-const projectsMenu = document.querySelector("[data-projects-menu]");
-const projectsToggle = document.querySelector("[data-projects-toggle]");
-const projectMenuLinks = [...document.querySelectorAll(".project-dropdown a")];
-const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-let projectsMenuCloseTimer = null;
-const defaultCamera = {
-  orbit: "18deg 64deg 94%",
+// ── Config wiring ──
+document.querySelectorAll("[data-config-linkedin]").forEach(el => {
+  if (LINKEDIN_URL !== "#") el.href = LINKEDIN_URL;
+});
+document.querySelectorAll("[data-config-github]").forEach(el => {
+  if (GITHUB_URL !== "#") el.href = GITHUB_URL;
+});
+document.querySelectorAll("[data-config-email-display]").forEach(el => {
+  el.textContent = DISPLAY_EMAIL;
+  el.href = `mailto:${DISPLAY_EMAIL}`;
+});
+
+// ── Hamburger menu (mobile) ──
+const hamburger = document.querySelector("[data-hamburger]");
+const navLinks = document.getElementById("nav-links");
+
+function closeHamburger() {
+  if (!hamburger || !navLinks) return;
+  hamburger.classList.remove("is-open");
+  navLinks.classList.remove("is-open");
+  hamburger.setAttribute("aria-expanded", "false");
+  hamburger.setAttribute("aria-label", "Open navigation");
+}
+
+if (hamburger && navLinks) {
+  hamburger.addEventListener("click", () => {
+    const opening = !hamburger.classList.contains("is-open");
+    hamburger.classList.toggle("is-open", opening);
+    navLinks.classList.toggle("is-open", opening);
+    hamburger.setAttribute("aria-expanded", String(opening));
+    hamburger.setAttribute("aria-label", opening ? "Close navigation" : "Open navigation");
+  });
+
+  document.addEventListener("click", e => {
+    const nav = document.querySelector(".top-nav");
+    if (nav && !nav.contains(e.target)) closeHamburger();
+  });
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeHamburger();
+});
+
+// ── View routing ──
+// Portfolio and Contact are reached only via nav links — the hero never flows
+// into them on scroll. The footer lives outside this switcher and is always shown.
+const VIEW_IDS = ["home", "portfolio", "contact"];
+const topNav = document.querySelector(".top-nav");
+const hasViews = VIEW_IDS.some(id => document.getElementById(id));
+
+// Portfolio elements (declared before the router so setView can reset the detail view)
+const projectGrid = document.getElementById("project-grid");
+const projectDetailView = document.getElementById("project-detail-view");
+const projectEmpty = document.getElementById("project-empty");
+
+function getViewFromHash() {
+  const id = window.location.hash.replace("#", "");
+  return VIEW_IDS.includes(id) ? id : "home";
+}
+
+function setView(id, updateHash = true) {
+  const target = document.getElementById(id);
+  if (!target || target.classList.contains("is-active")) {
+    closeHamburger();
+    return;
+  }
+
+  VIEW_IDS.forEach(viewId => {
+    const view = document.getElementById(viewId);
+    if (!view) return;
+    view.classList.remove("is-active");
+    view.hidden = true;
+  });
+
+  target.hidden = false;
+  void target.offsetWidth; // reflow so the opacity transition runs
+  target.classList.add("is-active");
+
+  // Entering Portfolio always starts on the tile grid, never a stale detail view
+  if (id === "portfolio") closeDetail();
+
+  if (topNav) topNav.classList.remove("is-scrolled");
+  window.scrollTo(0, 0);
+  closeHamburger();
+
+  if (updateHash) history.replaceState(null, "", `#${id}`);
+}
+
+if (hasViews) {
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener("click", e => {
+      const id = link.getAttribute("href").slice(1);
+      if (VIEW_IDS.includes(id)) {
+        e.preventDefault();
+        setView(id);
+      }
+    });
+  });
+
+  window.addEventListener("hashchange", () => setView(getViewFromHash(), false));
+
+  // Nav gains a touch more opacity once the user scrolls down
+  window.addEventListener("scroll", () => {
+    if (!topNav) return;
+    topNav.classList.toggle("is-scrolled", window.scrollY > 40);
+  }, { passive: true });
+
+  // Initial view from the hash (so deep links / redirects land correctly)
+  setView(getViewFromHash(), false);
+}
+
+// ── Portfolio (rendered from PROJECTS) ──
+// Preview image (tile top + detail fallback); dashed placeholder when none is set.
+function previewMarkup(p, cls) {
+  if (p.previewImage) {
+    return `<img class="${cls}" src="${p.previewImage}" alt="${p.name} preview">`;
+  }
+  return `<div class="${cls} is-placeholder">[ Preview Image ]</div>`;
+}
+
+function renderTiles() {
+  if (!projectGrid) return;
+
+  if (!PROJECTS.length) {
+    projectGrid.innerHTML = "";
+    if (projectEmpty) projectEmpty.hidden = false;
+    return;
+  }
+  if (projectEmpty) projectEmpty.hidden = true;
+
+  projectGrid.innerHTML = PROJECTS.map((p, i) => `
+    <article class="tile" data-index="${i}">
+      <div class="tile__media">${previewMarkup(p, "tile__image")}</div>
+      <div class="tile__body">
+        <h3 class="tile__name">${p.name}</h3>
+        <p class="tile__desc">${p.shortDescription}</p>
+        <div class="tile__foot">
+          <span class="tile__date">${p.dateRange}</span>
+          <button class="tile__cta" type="button" data-details="${i}">Get Details <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  projectGrid.querySelectorAll("[data-details]").forEach(btn => {
+    btn.addEventListener("click", () => openDetail(Number(btn.dataset.details)));
+  });
+}
+
+const DEFAULT_CAMERA = {
+  orbit: "16deg 80deg 84%",
   target: "0.136m 0.0044m 0.097m",
-  fieldOfView: "20deg"
+  fieldOfView: "22deg",
 };
 
-function getViewFromHash(hash) {
-  return routes[hash] || "home";
+// Right column of the detail: framed 3D viewer (with fullscreen + reset), or the preview image.
+function detailVisualMarkup(p) {
+  if (p.model3D) {
+    return `
+      <div class="pcb-viewer-shell" id="pcb-viewer-shell">
+        <model-viewer id="pcb-viewer" class="pcb-viewer" src="${p.model3D}" alt="3D model of ${p.name}"
+          camera-controls touch-action="pan-y" interaction-prompt="auto" tone-mapping="aces"
+          environment-image="neutral" exposure="1.0" shadow-intensity="0.38"
+          camera-orbit="${DEFAULT_CAMERA.orbit}" camera-target="${DEFAULT_CAMERA.target}"
+          field-of-view="${DEFAULT_CAMERA.fieldOfView}" loading="lazy">
+          <div class="pcb-viewer__loading" slot="poster">
+            <div class="pcb-viewer__spinner" aria-hidden="true"></div>
+            <span>Loading 3D PCB</span>
+          </div>
+        </model-viewer>
+        <button class="pcb-viewer__fullscreen" type="button" aria-label="Toggle fullscreen" data-fullscreen>
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/>
+          </svg>
+        </button>
+      </div>
+      <button class="pcb-viewer__reset" type="button" data-reset>Reset View</button>
+      <p class="pcb-viewer__hint">Drag to rotate, scroll to zoom, and pan with touch or right-click.</p>
+    `;
+  }
+  return previewMarkup(p, "detail-visual");
 }
 
-function applyView(nextView) {
-  app.dataset.activeView = nextView;
-  document.title = viewTitles[nextView] || viewTitles.home;
-  setProjectsMenuOpen(false);
+function openDetail(i) {
+  const p = PROJECTS[i];
+  if (!p || !projectDetailView) return;
 
-  views.forEach((view) => {
-    const isActive = view.dataset.view === nextView;
-    view.classList.toggle("is-active", isActive);
-    view.setAttribute("aria-hidden", String(!isActive));
+  const eyebrow = p.eyebrow ? `<p class="detail-eyebrow">${p.eyebrow}</p>` : "";
+  const chips = (p.chips && p.chips.length)
+    ? `<div class="detail-chips">${p.chips.map(c => `<span class="chip">${c}</span>`).join("")}</div>`
+    : "";
+  const paragraphs = (p.paragraphs || []).map(t => `<p class="detail-lede">${t}</p>`).join("");
+  const decisions = (p.keyDecisions && p.keyDecisions.length)
+    ? `<div class="detail-decisions">
+         <p class="detail-decisions__head">Key design decisions</p>
+         <ul>${p.keyDecisions.map(d => `<li>${d}</li>`).join("")}</ul>
+       </div>`
+    : "";
+
+  projectDetailView.innerHTML = `
+    <button class="detail-back" type="button" data-back>← Back to projects</button>
+    <div class="detail-grid">
+      <div class="detail-info-col">
+        ${eyebrow}
+        <h3 class="detail-title">${p.name}</h3>
+        ${chips}
+        ${paragraphs}
+        ${decisions}
+      </div>
+      <div class="detail-visual-col">${detailVisualMarkup(p)}</div>
+    </div>
+  `;
+
+  projectDetailView.querySelector("[data-back]").addEventListener("click", closeDetail);
+  wireViewer();
+
+  if (projectGrid) projectGrid.hidden = true;
+  projectDetailView.hidden = false;
+  void projectDetailView.offsetWidth;
+  projectDetailView.classList.add("is-active");
+  window.scrollTo(0, 0);
+}
+
+// Wire the 3D viewer controls for the currently-rendered detail view
+function wireViewer() {
+  const viewer = projectDetailView.querySelector("#pcb-viewer");
+  const shell = projectDetailView.querySelector("#pcb-viewer-shell");
+  if (!viewer || !shell) return;
+
+  const markLoaded = () => shell.classList.add("is-loaded");
+  if (viewer.loaded) markLoaded();
+  else viewer.addEventListener("load", markLoaded, { once: true });
+
+  const fsBtn = projectDetailView.querySelector("[data-fullscreen]");
+  if (fsBtn) {
+    fsBtn.addEventListener("click", () => {
+      if (document.fullscreenElement === shell) document.exitFullscreen();
+      else shell.requestFullscreen?.();
+    });
+  }
+
+  const resetBtn = projectDetailView.querySelector("[data-reset]");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      viewer.setAttribute("camera-orbit", DEFAULT_CAMERA.orbit);
+      viewer.setAttribute("camera-target", DEFAULT_CAMERA.target);
+      viewer.setAttribute("field-of-view", DEFAULT_CAMERA.fieldOfView);
+      viewer.jumpCameraToGoal?.();
+    });
+  }
+}
+
+function closeDetail() {
+  if (!projectDetailView) return;
+  projectDetailView.classList.remove("is-active");
+  projectDetailView.hidden = true;
+  projectDetailView.innerHTML = "";
+  if (projectGrid) projectGrid.hidden = false;
+  window.scrollTo(0, 0);
+}
+
+renderTiles();
+
+// ── Contact form (mailto baseline) ──
+const contactForm = document.getElementById("contact-form");
+const formSuccess = document.getElementById("form-success");
+
+if (contactForm && formSuccess) {
+  contactForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = contactForm.elements.name.value.trim();
+    const email = contactForm.elements.email.value.trim();
+    const message = contactForm.elements.message.value.trim();
+    if (!name || !email || !message) return;
+
+    // ↓ Recipient set by CONTACT_EMAIL at the top of this file
+    const subject = encodeURIComponent(`Message from ${name}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+
+    formSuccess.hidden = false;
+    contactForm.reset();
   });
 }
-
-function syncView() {
-  applyView(getViewFromHash(window.location.hash));
-}
-
-function setProjectsMenuOpen(isOpen) {
-  if (!projectsMenu || !projectsToggle) {
-    return;
-  }
-
-  window.clearTimeout(projectsMenuCloseTimer);
-  projectsMenuCloseTimer = null;
-  projectsMenu.classList.toggle("is-open", isOpen);
-  projectsToggle.setAttribute("aria-expanded", String(isOpen));
-}
-
-function toggleProjectsMenu() {
-  if (!projectsMenu) {
-    return;
-  }
-
-  setProjectsMenuOpen(!projectsMenu.classList.contains("is-open"));
-}
-
-function openProjectsMenu() {
-  setProjectsMenuOpen(true);
-}
-
-function closeProjectsMenu(delay = 0) {
-  if (!projectsMenu || !projectsToggle) {
-    return;
-  }
-
-  window.clearTimeout(projectsMenuCloseTimer);
-
-  if (delay > 0) {
-    projectsMenuCloseTimer = window.setTimeout(() => {
-      setProjectsMenuOpen(false);
-    }, delay);
-    return;
-  }
-
-  setProjectsMenuOpen(false);
-}
-
-function updateFullscreenButton() {
-  if (!fullscreenButton) {
-    return;
-  }
-
-  const isFullscreen = document.fullscreenElement === pcbViewerShell;
-  fullscreenButton.setAttribute(
-    "aria-label",
-    isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
-  );
-}
-
-async function toggleFullscreen() {
-  if (!pcbViewerShell) {
-    return;
-  }
-
-  if (document.fullscreenElement === pcbViewerShell) {
-    await document.exitFullscreen();
-    return;
-  }
-
-  await pcbViewerShell.requestFullscreen?.();
-}
-
-function resetViewer() {
-  if (!pcbViewer) {
-    return;
-  }
-
-  pcbViewer.setAttribute("camera-orbit", defaultCamera.orbit);
-  pcbViewer.setAttribute("camera-target", defaultCamera.target);
-  pcbViewer.setAttribute("field-of-view", defaultCamera.fieldOfView);
-  pcbViewer.jumpCameraToGoal?.();
-}
-
-if (pcbViewer && pcbViewerShell) {
-  const markLoaded = () => {
-    pcbViewerShell.classList.add("is-loaded");
-    resetViewer();
-  };
-
-  if (pcbViewer.loaded) {
-    markLoaded();
-  } else {
-    pcbViewer.addEventListener("load", markLoaded, { once: true });
-  }
-}
-
-if (fullscreenButton) {
-  fullscreenButton.addEventListener("click", () => {
-    void toggleFullscreen();
-  });
-}
-
-if (resetButton) {
-  resetButton.addEventListener("click", resetViewer);
-}
-
-if (projectsToggle) {
-  projectsToggle.addEventListener("click", toggleProjectsMenu);
-}
-
-if (projectsMenu) {
-  projectsMenu.addEventListener("pointerenter", () => {
-    if (hoverCapable) {
-      openProjectsMenu();
-    }
-  });
-
-  projectsMenu.addEventListener("pointerleave", () => {
-    if (hoverCapable) {
-      closeProjectsMenu(180);
-    }
-  });
-
-  projectsMenu.addEventListener("focusin", () => {
-    openProjectsMenu();
-  });
-
-  projectsMenu.addEventListener("focusout", (event) => {
-    if (projectsMenu.contains(event.relatedTarget)) {
-      return;
-    }
-
-    closeProjectsMenu(120);
-  });
-}
-
-if (projectsToggle) {
-  projectsToggle.addEventListener("pointerenter", () => {
-    if (hoverCapable) {
-      openProjectsMenu();
-    }
-  });
-
-  projectsToggle.addEventListener("pointerleave", () => {
-    if (hoverCapable) {
-      closeProjectsMenu(180);
-    }
-  });
-
-  projectsToggle.addEventListener("focus", () => {
-    openProjectsMenu();
-  });
-
-  projectsToggle.addEventListener("blur", () => {
-    closeProjectsMenu(120);
-  });
-}
-
-projectMenuLinks.forEach((link) => {
-  link.addEventListener("click", () => setProjectsMenuOpen(false));
-});
-
-document.addEventListener("click", (event) => {
-  if (!projectsMenu || projectsMenu.contains(event.target)) {
-    return;
-  }
-
-  setProjectsMenuOpen(false);
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    setProjectsMenuOpen(false);
-  }
-});
-
-window.addEventListener("resize", () => {
-  if (!hoverCapable) {
-    setProjectsMenuOpen(false);
-  }
-});
-
-document.addEventListener("fullscreenchange", updateFullscreenButton);
-
-window.addEventListener("hashchange", syncView);
-window.addEventListener("DOMContentLoaded", syncView);
-
-if (!window.location.hash) {
-  window.history.replaceState(null, "", "#/");
-}
-
-syncView();
-updateFullscreenButton();

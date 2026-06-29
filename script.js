@@ -13,9 +13,8 @@ const PROJECTS = [
     name: "USB-C Inline Power Meter",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "A pass-through USB-C power meter that measures voltage, current, and power " +
-      "delivered to a device in real time and shows all three on an onboard OLED. " +
-      "Designed end-to-end in KiCad while keeping USB-PD negotiation fully intact.",
+      "I designed a pass-through USB-C power meter in kicad that measures voltage, current, and power " +
+      "delivered to a device in real time and shows all three on an onboard screen. ",
     eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
     paragraphs: [

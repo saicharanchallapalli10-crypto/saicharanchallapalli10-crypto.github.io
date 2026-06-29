@@ -80,58 +80,58 @@ button, a { -webkit-tap-highlight-color: transparent; }
   width: 260px; height: 260px;
   background: radial-gradient(circle, rgba(74, 98, 255, 0.40) 0%, rgba(74, 98, 255, 0.17) 42%, transparent 72%);
   top: -50px; left: -30px;
-  animation: drift1 30s ease-in-out infinite;
+  animation: drift1 46s ease-in-out infinite;
 }
 .bubble--2 {
   width: 220px; height: 220px;
   background: radial-gradient(circle, rgba(0, 224, 220, 0.37) 0%, rgba(0, 224, 220, 0.15) 42%, transparent 72%);
   top: 8%; right: -50px;
-  animation: drift2 35s ease-in-out infinite;
+  animation: drift2 53s ease-in-out infinite;
 }
 .bubble--3 {
   width: 280px; height: 280px;
   background: radial-gradient(circle, rgba(140, 90, 255, 0.39) 0%, rgba(140, 90, 255, 0.15) 42%, transparent 72%);
   bottom: -70px; left: 14%;
-  animation: drift3 40s ease-in-out infinite;
+  animation: drift3 60s ease-in-out infinite;
 }
 .bubble--4 {
   width: 150px; height: 150px;
   background: radial-gradient(circle, rgba(0, 170, 255, 0.37) 0%, rgba(0, 170, 255, 0.15) 42%, transparent 72%);
   top: 55%; right: 16%;
-  animation: drift4 32s ease-in-out infinite;
+  animation: drift4 48s ease-in-out infinite;
 }
 .bubble--5 {
   width: 190px; height: 190px;
   background: radial-gradient(circle, rgba(74, 98, 255, 0.37) 0%, rgba(74, 98, 255, 0.15) 42%, transparent 72%);
   top: 20%; left: 50%;
-  animation: drift5 27s ease-in-out infinite;
+  animation: drift5 41s ease-in-out infinite;
 }
 .bubble--6 {
   width: 170px; height: 170px;
   background: radial-gradient(circle, rgba(0, 224, 220, 0.34) 0%, rgba(0, 224, 220, 0.14) 42%, transparent 72%);
   bottom: 18%; right: 8%;
-  animation: drift6 38s ease-in-out infinite;
+  animation: drift6 57s ease-in-out infinite;
   animation-delay: -6s;
 }
 .bubble--7 {
   width: 120px; height: 120px;
   background: radial-gradient(circle, rgba(140, 90, 255, 0.37) 0%, rgba(140, 90, 255, 0.15) 42%, transparent 72%);
   top: 5%; left: 42%;
-  animation: drift7 30s ease-in-out infinite;
+  animation: drift7 45s ease-in-out infinite;
   animation-delay: -11s;
 }
 .bubble--8 {
   width: 100px; height: 100px;
   background: radial-gradient(circle, rgba(0, 170, 255, 0.39) 0%, rgba(0, 170, 255, 0.15) 42%, transparent 72%);
   top: 42%; left: 7%;
-  animation: drift1 26s ease-in-out infinite reverse;
+  animation: drift1 39s ease-in-out infinite reverse;
   animation-delay: -9s;
 }
 .bubble--9 {
   width: 230px; height: 230px;
   background: radial-gradient(circle, rgba(74, 98, 255, 0.34) 0%, rgba(74, 98, 255, 0.14) 42%, transparent 72%);
   bottom: 10%; left: 36%;
-  animation: drift3 34s ease-in-out infinite reverse;
+  animation: drift3 51s ease-in-out infinite reverse;
   animation-delay: -14s;
 }
 

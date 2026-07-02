@@ -1,11 +1,11 @@
 /* ===== VARIABLES ===== */
 :root {
-  --bg: #0a1628;
-  --bg-deep: #081120;
-  --bg-mid: #0d1f3c;
+  --bg: #16244a;        /* brighter navy base */
+  --bg-deep: #132043;   /* gradient bottom */
+  --bg-mid: #1c2f5e;    /* gradient top */
   --text: #d0e4ff;
-  --text-dim: rgba(208, 228, 255, 0.65);
-  --text-muted: rgba(208, 228, 255, 0.42);
+  --text-dim: rgba(214, 231, 255, 0.72);
+  --text-muted: rgba(214, 231, 255, 0.5);
   --accent-indigo: #3a4fd4;
   --accent-cyan: #00c9c8;
   --glass-bg: rgba(255, 255, 255, 0.07);
@@ -32,10 +32,9 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(ellipse at 20% 10%, rgba(58, 79, 212, 0.25) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 90%, rgba(0, 201, 200, 0.18) 0%, transparent 50%),
-    linear-gradient(180deg, var(--bg-mid) 0%, var(--bg) 55%, var(--bg-deep) 100%);
+  /* Clean, brighter navy — gentle vertical fade, lighter at the top */
+  background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+  background-attachment: fixed;
   color: var(--text);
   font-family: "DM Sans", "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -55,76 +54,6 @@ main {
 a { color: inherit; text-decoration: none; }
 button { font: inherit; cursor: pointer; }
 button, a { -webkit-tap-highlight-color: transparent; }
-
-/* ===== BACKGROUND ===== */
-.background {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bubble {
-  position: absolute;            /* anchored to the fixed .background — reliable on mobile */
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  pointer-events: none;
-  will-change: transform;
-  /* Light softening only — the radial fills are already feathered, so we avoid the
-     heavy blur() radii that mobile GPUs drop and that washed the colour out. */
-  filter: blur(14px);
-}
-
-.bubble--1 {
-  width: 260px; height: 260px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.11) 42%, transparent 72%);
-  top: -50px; left: -30px;
-  animation: drift1 62s ease-in-out infinite;
-}
-.bubble--2 {
-  width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
-  top: 8%; right: -50px;
-  animation: drift2 72s ease-in-out infinite;
-}
-.bubble--3 {
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
-  bottom: -70px; left: 14%;
-  animation: drift3 81s ease-in-out infinite;
-}
-.bubble--4 {
-  width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
-  top: 55%; right: 16%;
-  animation: drift4 65s ease-in-out infinite;
-}
-.bubble--5 {
-  width: 190px; height: 190px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
-  top: 20%; left: 50%;
-  animation: drift5 55s ease-in-out infinite;
-}
-
-.background__noise {
-  position: fixed;
-  inset: 0;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='18' cy='14' r='0.8' opacity='0.26'/%3E%3Ccircle cx='68' cy='52' r='0.6' opacity='0.18'/%3E%3Ccircle cx='118' cy='28' r='0.7' opacity='0.14'/%3E%3Ccircle cx='36' cy='94' r='0.75' opacity='0.2'/%3E%3Ccircle cx='144' cy='108' r='0.9' opacity='0.16'/%3E%3Ccircle cx='88' cy='140' r='0.7' opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-.background__vignette {
-  position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(1, 5, 15, 0.28) 100%),
-    linear-gradient(180deg, rgba(2, 8, 24, 0.04), rgba(1, 5, 15, 0.20));
-  pointer-events: none;
-  z-index: 1;
-}
 
 /* ===== TOP NAV: transparent liquid glass sheet ===== */
 .top-nav {
@@ -254,29 +183,117 @@ button, a { -webkit-tap-highlight-color: transparent; }
   min-height: 100vh;
   display: grid;
   place-items: center;
-  text-align: center;
   padding: 80px 1.5rem 4rem;
 }
 
-.hero-inner {
-  display: grid;
-  gap: 1.4rem;
-  justify-items: center;
+/* Headshot | faint divider | intro text.
+   align-items: stretch makes the divider span the text column's height, so its
+   top sits level with the heading; the headshot centers itself independently. */
+.hero-intro {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(2rem, 5vw, 3.25rem);
+  animation: heroIn 500ms var(--ease-out) both;
 }
 
-.hero-name {
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-headshot {
+  align-self: center;
+  width: clamp(140px, 14vw, 175px);
+  height: clamp(140px, 14vw, 175px);
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.hero-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.15rem;
+  max-width: 480px;
+}
+
+.hero-heading {
   margin: 0;
-  display: grid;
-  gap: 0.1em;
   font-family: "Manrope", "Segoe UI", sans-serif;
-  font-size: clamp(3.4rem, 10vw, 7.5rem);
+  font-size: clamp(2.3rem, 5vw, 3.2rem);
   font-weight: 300;
-  letter-spacing: -0.07em;
-  line-height: 0.9;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   background: linear-gradient(90deg, #ffffff 0%, #a8d8ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.hero-blurb {
+  margin: 0;
+  color: rgba(220, 232, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.hero-tags-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.hero-tag-group {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.hero-tag-label {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-tags {
+  margin: 0;
+  color: rgba(220, 232, 255, 0.7);
+  font-size: 0.88rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.35rem;
+  padding: 10px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 100px;
+  background: transparent;
+  color: #eaf2ff;
+  font-size: 0.93rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  transition: all 0.25s ease;
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* ===== PAGE SECTIONS ===== */
@@ -736,11 +753,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
   justify-self: center;
 }
 
-.contact-layout {
+.contact-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   align-items: start;
+  width: fit-content;
+  margin: 0 auto;
+  max-width: 400px;
 }
 
 .glass-card {
@@ -752,11 +772,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
   padding: 32px;
 }
 
-/* Email-only contact card */
-.info-card {
+/* Contact info cards */
+.info-card,
+.social-card {
   display: grid;
-  gap: 1rem;
-  align-content: center;
+  gap: 1.25rem;
+}
+
+.info-card__heading,
+.social-card__heading {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 .info-card__lead {
@@ -780,7 +809,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .info-email__value {
   color: #a8d8ff;
-  font-size: 1.05rem;
+  font-size: 1rem;
   word-break: break-word;
   transition: color 0.25s ease;
 }
@@ -789,6 +818,34 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .info-email__value:focus-visible {
   color: #ffffff;
   text-decoration: underline;
+}
+
+/* Social links */
+.social-links {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #a8d8ff;
+  font-size: 1rem;
+  font-weight: 300;
+  transition: color 0.25s ease;
+  text-decoration: none;
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  color: #ffffff;
+}
+
+.social-link .social-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex-shrink: 0;
 }
 
 /* ===== FOOTER ===== */
@@ -941,51 +998,10 @@ button:focus-visible {
 }
 
 /* ===== KEYFRAMES ===== */
-@keyframes drift1 {
-  0%, 100% { transform: translate3d(-4vw, -3vh, 0) scale(1); }
-  18% { transform: translate3d(17vw, 7vh, 0) scale(1.08); }
-  37% { transform: translate3d(9vw, 30vh, 0) scale(0.95); }
-  58% { transform: translate3d(31vw, 21vh, 0) scale(1.04); }
-  79% { transform: translate3d(18vw, -8vh, 0) scale(0.98); }
-}
-@keyframes drift2 {
-  0%, 100% { transform: translate3d(5vw, -5vh, 0) scale(0.96); }
-  16% { transform: translate3d(-13vw, 13vh, 0) scale(1.06); }
-  39% { transform: translate3d(-28vw, 32vh, 0) scale(0.92); }
-  63% { transform: translate3d(-6vw, 42vh, 0) scale(1.03); }
-  82% { transform: translate3d(-23vw, 2vh, 0) scale(0.98); }
-}
-@keyframes drift3 {
-  0%, 100% { transform: translate3d(0, 7vh, 0) scale(1.02); }
-  21% { transform: translate3d(18vw, -11vh, 0) scale(0.94); }
-  43% { transform: translate3d(37vw, 10vh, 0) scale(1.07); }
-  66% { transform: translate3d(13vw, -22vh, 0) scale(0.97); }
-  84% { transform: translate3d(29vw, 22vh, 0) scale(1.03); }
-}
-@keyframes drift4 {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(0.9); }
-  24% { transform: translate3d(-19vw, -18vh, 0) scale(1.08); }
-  48% { transform: translate3d(-34vw, 5vh, 0) scale(0.96); }
-  72% { transform: translate3d(-8vw, 20vh, 0) scale(1.02); }
-}
-@keyframes drift5 {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  19% { transform: translate3d(14vw, 15vh, 0) scale(0.88); }
-  42% { transform: translate3d(-10vw, 33vh, 0) scale(1.1); }
-  67% { transform: translate3d(-28vw, 10vh, 0) scale(0.94); }
-  86% { transform: translate3d(-7vw, -12vh, 0) scale(1.04); }
-}
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
-  body {
-    background:
-      radial-gradient(ellipse at 15% 8%, rgba(58, 79, 212, 0.28) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 92%, rgba(0, 201, 200, 0.2) 0%, transparent 55%),
-      linear-gradient(180deg, #152944 0%, #102341 55%, #0c1a34 100%);
-  }
-
   .detail-grid {
     grid-template-columns: 1fr;
   }
@@ -1005,11 +1021,11 @@ button:focus-visible {
 @media (max-width: 768px) {
   /* Full-width bar stays; links collapse into a dropdown panel */
   .top-nav {
-    justify-content: space-between;
-    padding: 12px 20px 12px 64px;
+    justify-content: flex-start;
+    padding: 12px 20px;
   }
 
-  .nav-logo { left: 20px; }
+  .nav-logo { display: none; }
 
   .nav-hamburger { display: flex; }
 
@@ -1051,15 +1067,27 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  /* Bubbles: lighter blur (mobile GPUs choke on big radii) + larger so a few
-     always read on a narrow viewport. Sizes use vw with px floors so they
-     never collapse to invisibility. */
-  .bubble { filter: blur(9px); }
-  .bubble--1 { width: min(70vw, 300px); height: min(70vw, 300px); }
-  .bubble--2 { width: min(64vw, 260px); height: min(64vw, 260px); }
-  .bubble--3 { width: min(76vw, 320px); height: min(76vw, 320px); }
-  .bubble--4 { width: min(46vw, 180px); height: min(46vw, 180px); }
-  .bubble--5 { width: min(58vw, 240px); height: min(58vw, 240px); }
+  /* Hero stacks: headshot on top, short horizontal rule, centered text */
+  .hero-intro {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    text-align: center;
+  }
+
+  .hero-headshot {
+    width: 110px;
+    height: 110px;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+  }
+
+  .hero-text {
+    align-items: center;
+  }
 }
 
 @media (max-width: 640px) {
@@ -1072,7 +1100,7 @@ button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto !important; }
 
-  .bubble { animation: none !important; }
+  .hero-intro { animation: none !important; }
 
   .view,
   .top-nav,

@@ -1,8 +1,8 @@
 /* ===== VARIABLES ===== */
 :root {
-  --bg: #16244a;        /* brighter navy base */
-  --bg-deep: #132043;   /* gradient bottom */
-  --bg-mid: #1c2f5e;    /* gradient top */
+  --bg: #1c2f5e;        /* brighter navy base */
+  --bg-deep: #16264d;   /* gradient bottom */
+  --bg-mid: #1e3468;    /* gradient top */
   --text: #d0e4ff;
   --text-dim: rgba(214, 231, 255, 0.72);
   --text-muted: rgba(214, 231, 255, 0.5);
@@ -32,8 +32,13 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* Clean, brighter navy — gentle vertical fade, lighter at the top */
-  background: linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+  /* Brighter navy with soft, static aurora-like color glows layered over a
+     gentle vertical fade. Large + blurred so they read as depth, not shapes. */
+  background:
+    radial-gradient(60% 55% at 18% 12%, rgba(58, 79, 212, 0.22) 0%, transparent 60%),
+    radial-gradient(65% 60% at 85% 88%, rgba(0, 201, 200, 0.16) 0%, transparent 62%),
+    radial-gradient(50% 50% at 55% 45%, rgba(120, 80, 255, 0.12) 0%, transparent 65%),
+    linear-gradient(180deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
   background-attachment: fixed;
   color: var(--text);
   font-family: "DM Sans", "Segoe UI", sans-serif;

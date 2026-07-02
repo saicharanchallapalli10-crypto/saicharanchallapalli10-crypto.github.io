@@ -78,61 +78,33 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .bubble--1 {
   width: 260px; height: 260px;
-  background: radial-gradient(circle, rgba(74, 98, 255, 0.40) 0%, rgba(74, 98, 255, 0.17) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.11) 42%, transparent 72%);
   top: -50px; left: -30px;
-  animation: drift1 46s ease-in-out infinite;
+  animation: drift1 62s ease-in-out infinite;
 }
 .bubble--2 {
   width: 220px; height: 220px;
-  background: radial-gradient(circle, rgba(0, 224, 220, 0.37) 0%, rgba(0, 224, 220, 0.15) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
   top: 8%; right: -50px;
-  animation: drift2 53s ease-in-out infinite;
+  animation: drift2 72s ease-in-out infinite;
 }
 .bubble--3 {
   width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(140, 90, 255, 0.39) 0%, rgba(140, 90, 255, 0.15) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
   bottom: -70px; left: 14%;
-  animation: drift3 60s ease-in-out infinite;
+  animation: drift3 81s ease-in-out infinite;
 }
 .bubble--4 {
   width: 150px; height: 150px;
-  background: radial-gradient(circle, rgba(0, 170, 255, 0.37) 0%, rgba(0, 170, 255, 0.15) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
   top: 55%; right: 16%;
-  animation: drift4 48s ease-in-out infinite;
+  animation: drift4 65s ease-in-out infinite;
 }
 .bubble--5 {
   width: 190px; height: 190px;
-  background: radial-gradient(circle, rgba(74, 98, 255, 0.37) 0%, rgba(74, 98, 255, 0.15) 42%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.10) 42%, transparent 72%);
   top: 20%; left: 50%;
-  animation: drift5 41s ease-in-out infinite;
-}
-.bubble--6 {
-  width: 170px; height: 170px;
-  background: radial-gradient(circle, rgba(0, 224, 220, 0.34) 0%, rgba(0, 224, 220, 0.14) 42%, transparent 72%);
-  bottom: 18%; right: 8%;
-  animation: drift6 57s ease-in-out infinite;
-  animation-delay: -6s;
-}
-.bubble--7 {
-  width: 120px; height: 120px;
-  background: radial-gradient(circle, rgba(140, 90, 255, 0.37) 0%, rgba(140, 90, 255, 0.15) 42%, transparent 72%);
-  top: 5%; left: 42%;
-  animation: drift7 45s ease-in-out infinite;
-  animation-delay: -11s;
-}
-.bubble--8 {
-  width: 100px; height: 100px;
-  background: radial-gradient(circle, rgba(0, 170, 255, 0.39) 0%, rgba(0, 170, 255, 0.15) 42%, transparent 72%);
-  top: 42%; left: 7%;
-  animation: drift1 39s ease-in-out infinite reverse;
-  animation-delay: -9s;
-}
-.bubble--9 {
-  width: 230px; height: 230px;
-  background: radial-gradient(circle, rgba(74, 98, 255, 0.34) 0%, rgba(74, 98, 255, 0.14) 42%, transparent 72%);
-  bottom: 10%; left: 36%;
-  animation: drift3 51s ease-in-out infinite reverse;
-  animation-delay: -14s;
+  animation: drift5 55s ease-in-out infinite;
 }
 
 .background__noise {
@@ -1003,19 +975,6 @@ button:focus-visible {
   67% { transform: translate3d(-28vw, 10vh, 0) scale(0.94); }
   86% { transform: translate3d(-7vw, -12vh, 0) scale(1.04); }
 }
-@keyframes drift6 {
-  0%, 100% { transform: translate3d(2vw, 3vh, 0) scale(1); }
-  25% { transform: translate3d(-15vw, -10vh, 0) scale(1.06); }
-  55% { transform: translate3d(-25vw, 15vh, 0) scale(0.93); }
-  80% { transform: translate3d(-5vw, 28vh, 0) scale(1.02); }
-}
-@keyframes drift7 {
-  0%, 100% { transform: translate3d(-5vw, -8vh, 0) scale(0.95); }
-  30% { transform: translate3d(20vw, 12vh, 0) scale(1.1); }
-  60% { transform: translate3d(10vw, 28vh, 0) scale(0.9); }
-  85% { transform: translate3d(-15vw, 5vh, 0) scale(1.05); }
-}
-
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ===== RESPONSIVE ===== */
@@ -1101,7 +1060,6 @@ button:focus-visible {
   .bubble--3 { width: min(76vw, 320px); height: min(76vw, 320px); }
   .bubble--4 { width: min(46vw, 180px); height: min(46vw, 180px); }
   .bubble--5 { width: min(58vw, 240px); height: min(58vw, 240px); }
-  .bubble--8 { width: min(38vw, 150px); height: min(38vw, 150px); }
 }
 
 @media (max-width: 640px) {

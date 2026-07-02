@@ -105,6 +105,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-logo:hover,
 .nav-logo:focus-visible { opacity: 0.75; }
 
+/* Home icon — mobile only, replaces the SC logo at the top-left */
+.nav-home-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  color: #ffffff;
+  transition: opacity 0.25s ease;
+}
+
+.nav-home-icon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.nav-home-icon:hover,
+.nav-home-icon:focus-visible { opacity: 0.75; }
+
 .top-nav__links {
   display: flex;
   align-items: center;
@@ -747,15 +766,54 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .resume-back:focus-visible { color: #ffffff; }
 
 /* ===== CONTACT SECTION ===== */
+#contact {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 80px 1.5rem 4rem;
+}
+
 .contact-intro {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(2rem, 5vw, 3.25rem);
+}
+
+.contact-heading {
   margin: 0;
-  max-width: 60ch;
-  font-size: 1.1rem;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: clamp(2.3rem, 5vw, 3.2rem);
   font-weight: 300;
-  line-height: 1.7;
-  color: rgba(168, 216, 255, 0.8);
-  text-align: center;
-  justify-self: center;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #ffffff 0%, #a8d8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  flex-shrink: 0;
+  width: fit-content;
+}
+
+.contact-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.contact-text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.15rem;
+  max-width: 480px;
+}
+
+.contact-blurb {
+  margin: 0;
+  color: rgba(220, 232, 255, 0.8);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 100%;
 }
 
 .contact-cards {
@@ -763,9 +821,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   grid-template-columns: 1fr;
   gap: 1.5rem;
   align-items: start;
-  width: fit-content;
-  margin: 0 auto;
-  max-width: 400px;
+  width: 100%;
+  margin: 0;
+  max-width: 100%;
 }
 
 .glass-card {
@@ -1026,11 +1084,13 @@ button:focus-visible {
 @media (max-width: 768px) {
   /* Full-width bar stays; links collapse into a dropdown panel */
   .top-nav {
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 12px 20px;
   }
 
   .nav-logo { display: none; }
+
+  .nav-home-icon { display: flex; }
 
   .nav-hamburger { display: flex; }
 
@@ -1091,6 +1151,27 @@ button:focus-visible {
   }
 
   .hero-text {
+    align-items: center;
+  }
+
+  /* Contact stacks: heading on top, short horizontal rule, centered content */
+  .contact-intro {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    text-align: center;
+  }
+
+  .contact-heading {
+    max-width: none;
+  }
+
+  .contact-divider {
+    width: 60px;
+    height: 1px;
+  }
+
+  .contact-text-block {
     align-items: center;
   }
 }

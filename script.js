@@ -13,7 +13,7 @@ const PROJECTS = [
     name: "USB-C Inline Power Meter",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "I designed a pass-through USB-C power meter in kicad that measures voltage, current, and power " +
+      "Designed a pass-through USB-C power meter in Kicad that measures voltage, current, and power " +
       "delivered to a device in real time and shows all three on an onboard screen. ",
     eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
@@ -30,7 +30,32 @@ const PROJECTS = [
     ],
     dateRange: "May 2026 - June 2026",            // ← shown on the tile
     previewImage: "./images/usbc-preview.jpg",    // ← tile image + detail fallback when no 3D model
+    tileImageFit: "cover",                        // ← "cover" fills the tile media edge-to-edge; default "contain"
     model3D: "pcb.glb",                           // ← 3D model path (.glb/.gltf), or null to use previewImage
+  },
+  {
+    name: "Smart Parking Reservation Simulator",
+    // 2–3 sentence brief shown on the TILE
+    shortDescription:
+      "Developed the core backend of a smart parking reservation system with dynamic pricing and parking " +
+      "management. Connected the application's components and designed the frontend UI.",
+    eyebrow: "Software / Full-Stack",             // ← category line shown in the detail view
+    // Detail-view body paragraphs (each renders as its own <p>)
+    paragraphs: [
+      "For EECE 2140, I worked as part of a three-person team to develop a Smart Parking Reservation Simulator; The goal was to create a web-based application with a C++ backend designed to simulate a 100 spot parking facility with real-time reservations and dynamic pricing.",
+      "I was responsible for designing and implementing the PricingEngine and ParkingSpot classes; <strong>I developed an algorithmic pricing system that dynamically adjusted reservation costs based on real time parking demand, including factors such as lot occupancy and reservation duration.</strong>",
+      "I also integrated the project's backend by connecting the User, PricingEngine, and ParkingSpot classes through the main server. This involved processing HTTP requests, validating user input, coordinating data between classes, and returning responses to the frontend.",
+      
+    ],
+    chips: ["Started: February 2026", "Completed: April 2026"], // ← info chips in detail
+    dateRange: "February 2026 - April 2026",                      // ← shown on the tile
+    previewImage: "./images/c++preview.png",       // ← tile image
+    detailImage: "./images/c++main.png",           // ← detail-view image (no 3D model)
+    model3D: null,                                 // ← 3D model path (.glb/.gltf), or null to use images
+    projectLink: {
+      url: "https://github.com/saicharanchallapalli10-crypto/Smart-Parking-Reservation-Simulator-",
+      text: "Click here to visit the Github repository where more details and documentation exist for the project! "
+    }
   },
   // Add more projects here...
 ];
@@ -168,7 +193,7 @@ function renderTiles() {
 
   projectGrid.innerHTML = PROJECTS.map((p, i) => `
     <article class="tile" data-index="${i}">
-      <div class="tile__media">${previewMarkup(p, "tile__image")}</div>
+      <div class="tile__media">${previewMarkup(p, `tile__image tile__image--${p.tileImageFit || "contain"}`)}</div>
       <div class="tile__body">
         <h3 class="tile__name">${p.name}</h3>
         <p class="tile__desc">${p.shortDescription}</p>
@@ -216,6 +241,10 @@ function detailVisualMarkup(p) {
       <p class="pcb-viewer__hint">Drag to rotate, scroll to zoom, and pan with touch or right-click.</p>
     `;
   }
+  // A project may supply a dedicated detail image (distinct from its tile preview).
+  if (p.detailImage) {
+    return `<img class="detail-visual" src="${p.detailImage}" alt="${p.name}">`;
+  }
   return previewMarkup(p, "detail-visual");
 }
 
@@ -234,6 +263,9 @@ function openDetail(i) {
          <ul>${p.keyDecisions.map(d => `<li>${d}</li>`).join("")}</ul>
        </div>`
     : "";
+  const projectLinkHtml = (p.projectLink)
+    ? `<div class="detail-project-link"><a href="${p.projectLink.url}" target="_blank" rel="noopener noreferrer">${p.projectLink.text}</a></div>`
+    : "";
 
   projectDetailView.innerHTML = `
     <button class="detail-back" type="button" data-back>← Back to projects</button>
@@ -245,7 +277,7 @@ function openDetail(i) {
         ${paragraphs}
         ${decisions}
       </div>
-      <div class="detail-visual-col">${detailVisualMarkup(p)}</div>
+      <div class="detail-visual-col">${detailVisualMarkup(p)}${projectLinkHtml}</div>
     </div>
   `;
 

@@ -358,6 +358,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 1fr;
   gap: 1.5rem;
 }
 
@@ -387,19 +388,39 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .tile__media {
   width: 100%;
+  height: 255px;                 /* shared fixed height so all tile images align */
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .tile__image {
   display: block;
+}
+
+/* Fills the media area edge-to-edge, no padding or letterboxing. */
+.tile__image--cover {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
 }
 
+/* Scaled to fit fully inside the media area, centered with breathing room. */
+.tile__image--contain {
+  max-width: calc(100% - 3rem);
+  max-height: calc(100% - 3rem);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 .tile__image.is-placeholder {
+  width: 100%;
+  height: 100%;
   display: grid;
   place-items: center;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
   color: var(--text-muted);
   font-size: 0.85rem;
   letter-spacing: 0.05em;
@@ -409,7 +430,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .tile__body {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 4px;
   padding: 28px;
 }
 
@@ -418,6 +439,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   font-family: "Manrope", sans-serif;
   font-size: 1.4rem;
   font-weight: 400;
+  line-height: 1.25;
   letter-spacing: -0.03em;
   color: var(--text);
 }
@@ -554,6 +576,34 @@ button, a { -webkit-tap-highlight-color: transparent; }
   line-height: 1.8;
 }
 
+.detail-project-link {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-project-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: rgba(168, 216, 255, 0.08);
+  border: 1px solid rgba(168, 216, 255, 0.3);
+  color: #a8d8ff;
+  font-size: 0.95rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.detail-project-link a:hover,
+.detail-project-link a:focus-visible {
+  background: rgba(168, 216, 255, 0.15);
+  border-color: rgba(168, 216, 255, 0.6);
+  color: #ffffff;
+}
+
 .detail-decisions {
   display: grid;
   gap: 0.6rem;
@@ -584,10 +634,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 /* Image fallback when a project has no 3D model */
 .detail-visual {
   display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
+  max-width: 100%;
+  max-height: 450px;
+  width: auto;
+  height: auto;
   border-radius: 12px;
-  object-fit: cover;
+  object-fit: contain;
   box-shadow: 0 0 32px rgba(0, 201, 200, 0.15);
 }
 

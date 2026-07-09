@@ -643,6 +643,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
   box-shadow: 0 0 32px rgba(0, 201, 200, 0.15);
 }
 
+/* Optional second detail image, stacked below the primary one */
+.detail-visual--secondary {
+  margin-top: clamp(1rem, 2vw, 1.5rem);
+}
+
 .detail-visual.is-placeholder {
   display: grid;
   place-items: center;

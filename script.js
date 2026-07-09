@@ -57,6 +57,35 @@ const PROJECTS = [
       text: "Click here to visit the Github repository where more details and documentation exist for the project! "
     }
   },
+  {
+    name: "Arcade Game Project",
+    // 2–3 sentence brief shown on the TILE
+    shortDescription:
+      "Designed, wired, and programmed a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
+      "Pico boards with inter-board communication, photoresistor-based scoring, and real-time LCD point tracking.",
+    eyebrow: "Hardware / Embedded",               // ← category line shown in the detail view
+    // Detail-view body paragraphs (each renders as its own <p>)
+    paragraphs: [
+      "For Cornerstone of Engineering 1, a group of three people and I built an Arcade game. My team built a physical cup pong game with automated electronic scoring. The game has six cups spread across a base and backboard, each worth different points based on distance and elevation — 10, 20, 30, and 40 for the base cups, and 60 and 100 for the two backboard cups. The player gets six balls, unlimited time, and each cup can only be scored once, for a max of 260 points.",
+      "The game runs on two Raspberry Pi Pico microcontrollers programmed in MicroPython. Each cup has a photoresistor inside it that continuously reads ambient light levels. When a ball lands in a cup and blocks the light, the sensor reading drops below a coded threshold, triggering the corresponding point value to be sent to an LCD display. A desk lamp above the game keeps the baseline light level high so the contrast when a ball lands is large and detection stays reliable.",
+    ],
+    chips: ["Started: October 2025", "Completed: December 2025"], // ← info chips in detail
+    keyDecisionsHeading: "My contributions",       // ← custom heading for the bullet list below
+    keyDecisions: [                                 // ← renders as a bulleted list in detail
+      "Wired all six photoresistors in an organized manner and handled the full circuit layout across both boards.",
+      "Documented all parts chosen and the connections between the parts.",
+      "Wrote all the MicroPython code including the scoring logic and threshold detection.",
+      "Set up two separate Pico boards and established inter-board communication so sensor readings from one board could be sent to the other and all six scores tracked from a single display.",
+      "Integrated all wiring and electronics into the physical game after the structure was built.",
+      "Programmed a reset button so the next player can zero out the score and start a new round.",
+    ],
+    dateRange: "October 2025 - December 2025",     // ← shown on the tile
+    previewImage: "./images/corner-preview.JPG",   // ← tile image
+    tileImageFit: "cover",                          // ← fills the tile media edge-to-edge
+    detailImage: "./images/corner-main.JPG",       // ← primary detail-view image
+    detailImage2: "./images/corner-wiring.jpg",    // ← optional second image, rendered below the primary
+    model3D: null,                                 // ← 3D model path (.glb/.gltf), or null to use images
+  },
   // Add more projects here...
 ];
 // =============================================================
@@ -241,9 +270,14 @@ function detailVisualMarkup(p) {
       <p class="pcb-viewer__hint">Drag to rotate, scroll to zoom, and pan with touch or right-click.</p>
     `;
   }
-  // A project may supply a dedicated detail image (distinct from its tile preview).
+  // A project may supply a dedicated detail image (distinct from its tile preview),
+  // and optionally a second image rendered below it (e.g. an internal/wiring view).
   if (p.detailImage) {
-    return `<img class="detail-visual" src="${p.detailImage}" alt="${p.name}">`;
+    const primary = `<img class="detail-visual" src="${p.detailImage}" alt="${p.name}">`;
+    const secondary = p.detailImage2
+      ? `<img class="detail-visual detail-visual--secondary" src="${p.detailImage2}" alt="${p.name} — additional view">`
+      : "";
+    return primary + secondary;
   }
   return previewMarkup(p, "detail-visual");
 }
@@ -259,7 +293,7 @@ function openDetail(i) {
   const paragraphs = (p.paragraphs || []).map(t => `<p class="detail-lede">${t}</p>`).join("");
   const decisions = (p.keyDecisions && p.keyDecisions.length)
     ? `<div class="detail-decisions">
-         <p class="detail-decisions__head">Key design decisions</p>
+         <p class="detail-decisions__head">${p.keyDecisionsHeading || "Key design decisions"}</p>
          <ul>${p.keyDecisions.map(d => `<li>${d}</li>`).join("")}</ul>
        </div>`
     : "";

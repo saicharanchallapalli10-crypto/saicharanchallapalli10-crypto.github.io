@@ -46,7 +46,7 @@ const PROJECTS = [
     ],
     chips: [], // ← info chips in detail
     dateRange: "March 2026 - April 2026",                            // ← shown on the tile
-    previewImage: "./images/swd-preview.jpg",     // ← PLACEHOLDER: swap in the real tile image here
+    previewImage: "./images/aeropcb.png",         // ← tile preview image
     tileImageFit: "cover",                        // ← fills the tile media edge-to-edge (matches USB-C)
     model3D: "aeropcb.glb",                       // ← 3D model path (.glb/.gltf), or null to use previewImage
   },

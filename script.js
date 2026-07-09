@@ -61,7 +61,7 @@ const PROJECTS = [
     name: "Arcade Game Project",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "Designed, wired, and programmed a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
+      "Wired, assembled, and programmed a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
       "Pico boards with inter-board communication, photoresistor-based scoring, and real-time LCD point tracking.",
     eyebrow: "Hardware / Embedded",               // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
@@ -85,6 +85,23 @@ const PROJECTS = [
     detailImage: "./images/corner-main.JPG",       // ← primary detail-view image
     detailImage2: "./images/corner-wiring.jpg",    // ← optional second image, rendered below the primary
     model3D: null,                                 // ← 3D model path (.glb/.gltf), or null to use images
+  },
+  {
+    name: "SWD Debug Adapter",
+    // 2–3 sentence brief shown on the TILE
+    shortDescription:
+      "As a apart of the NU AERO club, I designed a dual-orientation SWD debug adapter PCB in KiCad with signal protection, auxiliary breakout " +
+      "pins, and support for both standard and flipped ARM 10-pin header pinouts.",
+    eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
+    // Detail-view body paragraphs (each renders as its own <p>)
+    paragraphs: [
+      "Designed a compact SWD debug adapter board in KiCad that lets you connect a debug probe to ARM microcontrollers regardless of the target's header orientation. The board has two 10-pin connectors — one standard and one flipped — so it works with both pinout layouts without rewiring.",
+    ],
+    chips: ["Status: Complete", "KiCad", "PCB Design", "ARM", "SWD", "Hardware"], // ← info chips in detail
+    dateRange: "2026",                            // ← shown on the tile
+    previewImage: "./images/swd-preview.jpg",     // ← PLACEHOLDER: swap in the real tile image here
+    tileImageFit: "cover",                        // ← fills the tile media edge-to-edge (matches USB-C)
+    model3D: "aeropcb.glb",                       // ← 3D model path (.glb/.gltf), or null to use previewImage
   },
   // Add more projects here...
 ];

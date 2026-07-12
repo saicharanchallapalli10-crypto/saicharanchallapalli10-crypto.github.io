@@ -29,9 +29,9 @@ const PROJECTS = [
       "Seeed XIAO RP2040 microcontroller for I2C control and display drive.",
     ],
     dateRange: "May 2026 - June 2026",            // ← shown on the tile
-    previewImage: "./images/usbc-preview.jpg",    // ← tile image + detail fallback when no 3D model
+    previewImage: "./images/Powersense.png",  // ← tile image + detail fallback when no 3D model
     tileImageFit: "cover",                        // ← "cover" fills the tile media edge-to-edge; default "contain"
-    model3D: "pcb.glb",                           // ← 3D model path (.glb/.gltf), or null to use previewImage
+    model3D: "powersense.glb",                    // ← 3D model path (.glb/.gltf), or null to use previewImage
   },
   {
     name: "SWD Debug Adapter",
@@ -54,8 +54,8 @@ const PROJECTS = [
     name: "Smart Parking Reservation Simulator",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "Developed the core backend of a smart parking reservation system with dynamic pricing and parking " +
-      "management. Connected the application's components and designed the frontend UI.",
+      "Developed the core backend of a smart parking reservation system with dynamic pricing alogrithm and parking " +
+      "management in c++. Connected the application's components and designed the frontend UI using CSS.",
     eyebrow: "Software / Full-Stack",             // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
     paragraphs: [
@@ -83,8 +83,8 @@ const PROJECTS = [
     eyebrow: "Hardware / Embedded",               // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
     paragraphs: [
-      "For Cornerstone of Engineering 1, a group of three people and I built an Arcade game. My team built a physical cup pong game with automated electronic scoring. The game has six cups spread across a base and backboard, each worth different points based on distance and elevation — 10, 20, 30, and 40 for the base cups, and 60 and 100 for the two backboard cups. The player gets six balls, unlimited time, and each cup can only be scored once, for a max of 260 points.",
-      "The game runs on two Raspberry Pi Pico microcontrollers programmed in MicroPython. Each cup has a photoresistor inside it that continuously reads ambient light levels. When a ball lands in a cup and blocks the light, the sensor reading drops below a coded threshold, triggering the corresponding point value to be sent to an LCD display. A desk lamp above the game keeps the baseline light level high so the contrast when a ball lands is large and detection stays reliable.",
+      "For Cornerstone of Engineering 1, I served as the technical lead on a four-person team that developed an arcade game. My team built a physical cup pong game with automated electronic scoring. The game has six cups spread across a base and backboard, each worth different points based on distance and elevation — 10, 20, 30, and 40 for the base cups, and 60 and 100 for the two backboard cups. The player gets six balls, unlimited time, and each cup can only be scored once, for a max of 260 points.",
+      "As the technical lead of the project, I made it so the game ran on two Raspberry Pi Pico microcontrollers programmed in MicroPython. Each cup contained a photoresistor that continuously measured ambient light levels. When a ball landed in a cup and blocked the light, the sensor reading dropped below a coded threshold, triggering the corresponding point value to be sent to an LCD display. A desk lamp positioned above the game kept the baseline light level high, so the contrast created when a ball landed was large and detection remained reliable.",
     ],
     chips: ["Started: October 2025", "Completed: December 2025"], // ← info chips in detail
     keyDecisionsHeading: "My contributions",       // ← custom heading for the bullet list below

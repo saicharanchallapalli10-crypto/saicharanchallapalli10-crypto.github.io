@@ -78,7 +78,7 @@ const PROJECTS = [
     name: "Arcade Game Project",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "Wired, assembled, and programmed a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
+      "As the technical lead of a four person project, I Wired, assembled, and programmed a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
       "Pico boards with inter-board communication, photoresistor-based scoring, and real-time LCD point tracking.",
     eyebrow: "Hardware / Embedded",               // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)

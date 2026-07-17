@@ -2,7 +2,7 @@
 const OWNER_NAME    = "SaiCharan Challapalli";
 const CONTACT_EMAIL = "challapalli.si@northeastern.edu";       // ← Contact form sends here
 const DISPLAY_EMAIL = "challapalli.si@northeastern.edu";       // ← Shown in contact card
-const LINKEDIN_URL  = "www.linkedin.com/in/saicharan-challapalli-546771422"                    // ← Your LinkedIn profile URL (footer)
+const LINKEDIN_URL  = "https://www.linkedin.com/in/saicharan-challapalli-546771422";          // ← Your LinkedIn profile URL (footer)
 const GITHUB_URL    = "https://github.com/saicharanchallapalli10-crypto";                    // ← Your GitHub profile URL (footer)
 // ==============================================
 

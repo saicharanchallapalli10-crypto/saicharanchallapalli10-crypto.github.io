@@ -35,6 +35,9 @@ const PROJECTS = [
     previewImage: "./images/Audiosensepcb.png",  // ← tile image + detail fallback when no 3D model
     tileImageFit: "cover",                        // ← "cover" fills the tile media edge-to-edge; default "contain"
     model3D: "Audiosense11.glb",                  // ← 3D model path (.glb/.gltf), or null to use previewImage
+    // This model's origin differs from the other boards', so let model-viewer center
+    // the camera on its own bounding-box center (stays centered across resizes).
+    camera: { target: "auto" },
   },
   {
     name: "USB-C Inline Power Meter",
@@ -289,16 +292,29 @@ const DEFAULT_CAMERA = {
   fieldOfView: "22deg",
 };
 
+// Resolve the camera framing for a project, allowing a per-project `camera` override
+// (e.g. target: "auto" to center on the model's own bounding box) while leaving the
+// shared DEFAULT_CAMERA framing untouched for every other tile.
+function resolveCamera(p) {
+  return {
+    orbit: (p.camera && p.camera.orbit) || DEFAULT_CAMERA.orbit,
+    target: (p.camera && p.camera.target) || DEFAULT_CAMERA.target,
+    fieldOfView: (p.camera && p.camera.fieldOfView) || DEFAULT_CAMERA.fieldOfView,
+  };
+}
+
 // Right column of the detail: framed 3D viewer (with fullscreen + reset), or the preview image.
 function detailVisualMarkup(p) {
   if (p.model3D) {
+    const cam = resolveCamera(p);
     return `
       <div class="pcb-viewer-shell" id="pcb-viewer-shell">
         <model-viewer id="pcb-viewer" class="pcb-viewer" src="${p.model3D}" alt="3D model of ${p.name}"
           camera-controls touch-action="pan-y" interaction-prompt="auto" tone-mapping="aces"
           environment-image="neutral" exposure="1.0" shadow-intensity="0.38"
-          camera-orbit="${DEFAULT_CAMERA.orbit}" camera-target="${DEFAULT_CAMERA.target}"
-          field-of-view="${DEFAULT_CAMERA.fieldOfView}" loading="lazy">
+          camera-orbit="${cam.orbit}" camera-target="${cam.target}"
+          data-cam-orbit="${cam.orbit}" data-cam-target="${cam.target}" data-cam-fov="${cam.fieldOfView}"
+          field-of-view="${cam.fieldOfView}" loading="lazy">
           <div class="pcb-viewer__loading" slot="poster">
             <div class="pcb-viewer__spinner" aria-hidden="true"></div>
             <span>Loading 3D PCB</span>
@@ -390,9 +406,9 @@ function wireViewer() {
   const resetBtn = projectDetailView.querySelector("[data-reset]");
   if (resetBtn) {
     resetBtn.addEventListener("click", () => {
-      viewer.setAttribute("camera-orbit", DEFAULT_CAMERA.orbit);
-      viewer.setAttribute("camera-target", DEFAULT_CAMERA.target);
-      viewer.setAttribute("field-of-view", DEFAULT_CAMERA.fieldOfView);
+      viewer.setAttribute("camera-orbit", viewer.dataset.camOrbit || DEFAULT_CAMERA.orbit);
+      viewer.setAttribute("camera-target", viewer.dataset.camTarget || DEFAULT_CAMERA.target);
+      viewer.setAttribute("field-of-view", viewer.dataset.camFov || DEFAULT_CAMERA.fieldOfView);
       viewer.jumpCameraToGoal?.();
     });
   }

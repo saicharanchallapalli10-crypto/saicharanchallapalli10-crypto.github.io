@@ -2,7 +2,7 @@
 const OWNER_NAME    = "SaiCharan Challapalli";
 const CONTACT_EMAIL = "challapalli.si@northeastern.edu";       // ← Contact form sends here
 const DISPLAY_EMAIL = "challapalli.si@northeastern.edu";       // ← Shown in contact card
-const LINKEDIN_URL  = "#";                    // ← Your LinkedIn profile URL (footer)
+const LINKEDIN_URL  = "#";"www.linkedin.com/in/saicharan-challapalli-546771422"                    // ← Your LinkedIn profile URL (footer)
 const GITHUB_URL    = "https://github.com/saicharanchallapalli10-crypto";                    // ← Your GitHub profile URL (footer)
 // ==============================================
 
@@ -37,12 +37,11 @@ const PROJECTS = [
     name: "SWD Debug Adapter",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "As a apart of the NU AERO club this was the first PCB I designed; For my first ever PCB, I designed a dual-orientation SWD debug adapter PCB in KiCad with signal protection, auxiliary breakout " +
-      "pins, and support for both standard and flipped ARM 10-pin header pinouts.",
+      "As part of the AerospaceNU club, this was the first PCB I ever designed; A dual orientation SWD debug adapter that supports both standard and flipped ARM 10-pin headers.",
     eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
     paragraphs: [
-      "Designed a compact SWD debug adapter board in KiCad that lets you connect a debug probe to ARM microcontrollers regardless of the target's header orientation. The board has two 10-pin connectors — one standard and one flipped — so it works with both pinout layouts without rewiring.",
+      "Designed a compact SWD debug adapter board in KiCad that lets you connect a debug probe to ARM microcontrollers regardless of the target's header orientation. The board has two 10-pin connectors, one standard and one flipped ,so it works with both pinout layouts without rewiring.",
     ],
     chips: [], // ← info chips in detail
     dateRange: "March 2026 - April 2026",                            // ← shown on the tile
@@ -67,6 +66,7 @@ const PROJECTS = [
     chips: ["Started: February 2026", "Completed: April 2026"], // ← info chips in detail
     dateRange: "February 2026 - April 2026",                      // ← shown on the tile
     previewImage: "./images/c++preview.png",       // ← tile image
+    tileImageFit: "cover",                          // ← fills the tile media edge-to-edge (matches PCB tiles)
     detailImage: "./images/c++main.png",           // ← detail-view image (no 3D model)
     model3D: null,                                 // ← 3D model path (.glb/.gltf), or null to use images
     projectLink: {
@@ -78,7 +78,7 @@ const PROJECTS = [
     name: "Arcade Game Project",
     // 2–3 sentence brief shown on the TILE
     shortDescription:
-      "As the technical lead of a four person project, I Wired, assembled, and programmed a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
+      "As the technical lead of a four person project, I wired and programmed the technical components of a cup pong arcade game in MicroPython using two separate Raspberry Pi " +
       "Pico boards with inter-board communication, photoresistor-based scoring, and real-time LCD point tracking.",
     eyebrow: "Hardware / Embedded",               // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)

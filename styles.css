@@ -358,7 +358,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 1fr;
+  /* Rows size to their own content (not force-equalized to the tallest row),
+     so a row with short text isn't stretched tall — which kept a big empty gap
+     above the pinned footer. align-items: stretch still equalizes cards within
+     a row, so the date + CTA row stays aligned across each row. */
+  grid-auto-rows: auto;
+  align-items: stretch;
   gap: 18px;
 }
 
@@ -432,6 +437,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
   flex-direction: column;
   gap: 4px;
   padding: 22px;
+  /* Fill the remaining card height so .tile__foot's margin-top:auto can pin
+     the date + CTA row to the bottom, aligned across all cards. */
+  flex: 1;
 }
 
 .tile__name {
@@ -457,6 +465,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  /* Push the date + CTA row to the bottom so it aligns across all cards,
+     no matter how much description text sits above it. */
   margin-top: auto;
   padding-top: 0.5rem;
 }

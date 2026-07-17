@@ -10,6 +10,33 @@ const GITHUB_URL    = "https://github.com/saicharanchallapalli10-crypto";       
 // Adding a project to this array automatically renders a tile + detail view.
 const PROJECTS = [
   {
+    name: "Real-Time Audio Spectrum Analyzer",
+    // 2–3 sentence brief shown on the TILE
+    shortDescription:
+      "Designed a USB-C powered PCB in KiCad that uses an ESP32-S3 to sample audio from a 3.5mm line-in and display a live frequency-band equalizer on an onboard OLED, with a rotary encoder for mode and sensitivity control.",
+    eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
+    // Detail-view body paragraphs (each renders as its own <p>)
+    paragraphs: [
+      "I designed a real-time audio spectrum analyzer in KiCad that takes a 3.5mm line-in signal, processes it through an analog front end, and displays a live frequency equalizer on an onboard OLED. The design uses an MCP6002 rail-to-rail op-amp for audio conditioning (AC coupling, mid-rail biasing, ×11 gain, and anti-alias filtering), an ESP32-S3 to sample the audio and run FFT analysis, and an Adafruit SSD1309 OLED driven over 4-wire SPI. A Bourns rotary encoder with debounced pull-ups handles user input. Power comes in through USB-C, a PTC fuse, TVS diode, and reverse-current Schottky, stepped down to 3.3V by an MCP1700 LDO — with a ferrite-bead-filtered branch giving the analog section its own clean supply.",
+      "I decided to take this project on mainly because I think it's just really cool. When I listen to music on my laptop, I usually have an equalizer running on a second screen to visualize the music; I've always liked seeing the highs, mids, and lows move as it plays. That inspired me to build a physical device that shows the same kind of equalizer, but in hardware. I also wanted to learn more about how op-amps and ADCs work, so this project let me combine both of those goals.",
+      "From a high-level perspective, the board takes weak stereo audio from a 3.5mm jack, AC-couples it to strip any DC offset, sums it to mono, biases it to 1.65V so it fits inside the ESP32's 0–3.3V ADC window, amplifies it ×11 for good ADC resolution, then filters out any frequencies above ~16kHz before digitizing. Firmware then runs FFT math to split the audio into frequency bands and draws them as animated bars on the OLED in real time.",
+    ],
+    chips: [], // ← info chips in detail
+    keyDecisions: [                                          // ← "Key design decisions" bullets in detail
+      "Rail-to-rail MCP6002 op-amp (not LM358) for clean single-supply 3.3V operation",
+      "Two-op-amp topology: one for ×11 audio gain, second half as a unity buffer for the 1.65V mid-rail reference",
+      "Separate analog 3.3V rail via ferrite bead to isolate the op-amp from digital switching noise",
+      "RC anti-alias filter (~16kHz cutoff) ahead of the ADC to prevent aliasing in the FFT",
+      "Star-grounded 2-layer PCB layout with stitching vias and analog/digital domain separation",
+      "ESP32-S3 for its DSP-accelerated FFT, native USB flashing, and hardware SPI",
+      "Passive USB-C sink configuration (two 5.1kΩ CC resistors)",
+    ],
+    dateRange: "June 2026 - July 2026",            // ← shown on the tile
+    previewImage: "./images/Audiosensepcb.png",  // ← tile image + detail fallback when no 3D model
+    tileImageFit: "cover",                        // ← "cover" fills the tile media edge-to-edge; default "contain"
+    model3D: "Audiosense11.glb",                  // ← 3D model path (.glb/.gltf), or null to use previewImage
+  },
+  {
     name: "USB-C Inline Power Meter",
     // 2–3 sentence brief shown on the TILE
     shortDescription:

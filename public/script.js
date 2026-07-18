@@ -34,7 +34,7 @@ const PROJECTS = [
     dateRange: "June 2026 - July 2026",            // ← shown on the tile
     previewImage: "./images/Audiosensepcb.png",  // ← tile image + detail fallback when no 3D model
     tileImageFit: "cover",                        // ← "cover" fills the tile media edge-to-edge; default "contain"
-    model3D: "pcbs/audiosense.glb",               // ← 3D model path (.glb/.gltf), or null to use previewImage
+    model3D: "/pcbs/audiosense.glb",              // ← 3D model path (.glb/.gltf), or null to use previewImage
     // This model's origin differs from the other boards', so let model-viewer center
     // the camera on its own bounding-box center (stays centered across resizes).
     camera: { target: "auto" },
@@ -61,7 +61,7 @@ const PROJECTS = [
     dateRange: "May 2026 - June 2026",            // ← shown on the tile
     previewImage: "./images/Powersense.png",  // ← tile image + detail fallback when no 3D model
     tileImageFit: "cover",                        // ← "cover" fills the tile media edge-to-edge; default "contain"
-    model3D: "pcbs/powersense.glb",               // ← 3D model path (.glb/.gltf), or null to use previewImage
+    model3D: "/pcbs/powersense.glb",              // ← 3D model path (.glb/.gltf), or null to use previewImage
   },
   {
     name: "SWD Debug Adapter",
@@ -77,7 +77,7 @@ const PROJECTS = [
     dateRange: "March 2026 - April 2026",                            // ← shown on the tile
     previewImage: "./images/aeropcb.png",         // ← tile preview image
     tileImageFit: "cover",                        // ← fills the tile media edge-to-edge (matches USB-C)
-    model3D: "pcbs/aeropcb.glb",                  // ← 3D model path (.glb/.gltf), or null to use previewImage
+    model3D: "/pcbs/aeropcb.glb",                 // ← 3D model path (.glb/.gltf), or null to use previewImage
   },
   {
     name: "Smart Parking Reservation Simulator",

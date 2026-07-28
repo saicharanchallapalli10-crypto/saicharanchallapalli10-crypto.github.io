@@ -446,3 +446,58 @@ if (contactForm && formSuccess) {
     contactForm.reset();
   });
 }
+
+// ── Home: recent-projects timeline ──
+// Reuses the same PROJECTS array the portfolio grid renders from, so entries
+// here stay in sync automatically. The array is ordered newest-first.
+const aboutTimeline = document.getElementById("about-timeline");
+const TIMELINE_LIMIT = 4;
+
+// The tile descriptions are multi-sentence; the timeline shows only the first.
+// A period only counts as a sentence break when followed by whitespace + a
+// capital letter (or end of string), so decimals like "3.5mm" don't split it.
+function firstSentence(text) {
+  const s = String(text).trim();
+  const match = s.match(/^[\s\S]*?[.!?](?=\s+[A-Z]|\s*$)/);
+  return (match ? match[0] : s).trim();
+}
+
+function renderTimeline() {
+  if (!aboutTimeline) return;
+
+  aboutTimeline.innerHTML = PROJECTS.slice(0, TIMELINE_LIMIT).map(p => `
+    <li class="timeline__item">
+      <h3 class="timeline__title">${p.name}</h3>
+      <p class="timeline__desc">${firstSentence(p.shortDescription)}</p>
+      <p class="timeline__date">${p.dateRange}</p>
+    </li>
+  `).join("");
+}
+
+renderTimeline();
+
+// ── Scroll reveal ──
+// Fades [data-reveal] elements up as they enter the viewport. Users who prefer
+// reduced motion (or browsers without IntersectionObserver) just get them shown.
+const revealTargets = document.querySelectorAll("[data-reveal]");
+
+if (revealTargets.length) {
+  // Opt in to the hidden starting state only now that JS is confirmed running,
+  // so a JS failure can never leave the section permanently invisible.
+  document.documentElement.classList.add("js-reveal");
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    revealTargets.forEach(el => el.classList.add("is-visible"));
+  } else {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        // Toggle in both directions: fade in on enter, fade out on exit.
+        entry.target.classList.toggle("is-visible", entry.isIntersecting);
+      });
+    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+
+    revealTargets.forEach(el => revealObserver.observe(el));
+  }
+}

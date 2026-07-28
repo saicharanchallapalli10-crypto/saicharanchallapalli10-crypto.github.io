@@ -46,6 +46,98 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* ===== CORNER GLOWS =====
+   Two soft green->teal radial glows anchored to the bottom-right and top-left
+   corners, sitting behind all content (z-index: 0, above the body's static
+   background but below every real element). pointer-events: none so they never
+   intercept clicks. Each combines two calm, GPU-friendly loops: a "breathe"
+   (transform + opacity) and a "hue drift" (filter). Tweak the vars below. */
+:root {
+  --glow-core:  rgba(45, 225, 150, 0.55);  /* green center */
+  --glow-mid:   rgba(35, 200, 180, 0.30);  /* teal midpoint */
+  --glow-faint: rgba(40, 205, 175, 0.18);  /* soft outer wash */
+  --glow-width:  80%;
+  --glow-height: 95%;
+  --glow-blur:  60px;
+  --glow-breathe-duration: 11s;
+  --glow-hue-duration:     17s;
+}
+
+.corner-glow {
+  position: fixed;
+  right: -14%;
+  bottom: -18%;
+  width: var(--glow-width);
+  height: var(--glow-height);
+  /* z-index: 0 sits above the body's opaque background but below the page
+     content (hero + sections are z-index: 1), so the glow reads clearly while
+     text stays on top. */
+  z-index: 0;
+  pointer-events: none;
+  /* Grow toward/away from the corner rather than the center. */
+  transform-origin: 78% 78%;
+  /* Several overlapping ellipses at different sizes/offsets so the glow spreads
+     unevenly across the corner (organic, not a clean uniform circle). */
+  background:
+    radial-gradient(52% 46% at 66% 64%, var(--glow-core), transparent 60%),
+    radial-gradient(40% 62% at 85% 82%, var(--glow-mid), transparent 66%),
+    radial-gradient(78% 38% at 52% 90%, var(--glow-faint), transparent 72%);
+  filter: blur(var(--glow-blur));
+  will-change: transform, opacity, filter;
+  /* Two independent loops: breathe drives transform/opacity, hue drives filter.
+     They touch different properties, so combining them is conflict-free. */
+  animation:
+    glowBreathe var(--glow-breathe-duration) ease-in-out infinite,
+    glowHue     var(--glow-hue-duration)     ease-in-out infinite;
+}
+
+/* Mirrored twin anchored to the top-left corner. Same base styles + loops, but
+   flipped position/origin and horizontally-mirrored gradient focal points.
+   Offset animation delays so the two corners never pulse in sync. */
+.corner-glow--tl {
+  top: -18%;
+  left: -14%;
+  right: auto;
+  bottom: auto;
+  transform-origin: 22% 22%;
+  background:
+    radial-gradient(52% 46% at 34% 36%, var(--glow-core), transparent 60%),
+    radial-gradient(40% 62% at 15% 18%, var(--glow-mid), transparent 66%),
+    radial-gradient(78% 38% at 48% 10%, var(--glow-faint), transparent 72%);
+  animation-delay: -5.5s, -8s;
+}
+
+/* Breathe — grow in and out toward the corner. */
+@keyframes glowBreathe {
+  0%, 100% { transform: scale(0.85); opacity: 0.7; }
+  50%      { transform: scale(1.2); opacity: 1; }
+}
+
+/* Hue drift — subtly shift between green and teal. blur() is repeated in every
+   keyframe so the glow never loses its softness while filter animates. */
+@keyframes glowHue {
+  0%, 100% { filter: blur(var(--glow-blur)) hue-rotate(-12deg); }
+  50%      { filter: blur(var(--glow-blur)) hue-rotate(22deg); }
+}
+
+/* On small screens the glow fills a much larger share of the viewport, so ease
+   it back: fainter colors and a shorter footprint keep it subtle on mobile. */
+@media (max-width: 640px) {
+  :root {
+    --glow-core:  rgba(45, 225, 150, 0.36);
+    --glow-mid:   rgba(35, 200, 180, 0.20);
+    --glow-faint: rgba(40, 205, 175, 0.12);
+    --glow-height: 62%;
+  }
+}
+
+/* Respect reduced-motion: freeze to a static glow. */
+@media (prefers-reduced-motion: reduce) {
+  .corner-glow {
+    animation: none;
+  }
+}
+
 /* main grows to fill the viewport so the footer is always the terminal element
    (no dark band below it when a view is short). */
 main {
@@ -54,6 +146,9 @@ main {
 
 .site-footer {
   flex-shrink: 0;
+  /* Keep the footer above the corner glow, matching the page sections. */
+  position: relative;
+  z-index: 1;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -304,20 +399,220 @@ button, a { -webkit-tap-highlight-color: transparent; }
   gap: 0.45rem;
   margin-top: 0.35rem;
   padding: 10px 24px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid transparent;
   border-radius: 100px;
-  background: transparent;
-  color: #eaf2ff;
+  background: #ffffff;
+  color: #0d1b3a;
   font-size: 0.93rem;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.02em;
-  transition: all 0.25s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
 }
 
-.hero-cta:hover,
+.hero-cta:hover {
+  background: #eef2fb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.30);
+}
+
 .hero-cta:focus-visible {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.06);
+  outline: 2px solid #7ea2ff;
+  outline-offset: 3px;
+}
+
+/* ===== SCROLL REVEAL =====
+   Elements marked [data-reveal] start faded + nudged down and settle into place
+   when they scroll into view (class toggled by the IntersectionObserver in
+   script.js). Only opacity/transform animate, so it stays cheap.
+
+   The .js-reveal guard is set on <html> by script.js, so the starting hidden
+   state only ever applies when JS is running to undo it — without JS the
+   content just renders normally. */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+}
+
+.js-reveal [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger the second column slightly behind the first. */
+.js-reveal [data-reveal][data-reveal-delay="1"] {
+  transition-delay: 130ms;
+}
+
+/* Reduced motion: show everything immediately, no transition. */
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal [data-reveal],
+  .js-reveal [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===== HOME: BELOW-HERO ABOUT SECTION ===== */
+.about-section {
+  /* Above the corner glows, matching the other page sections. */
+  position: relative;
+  z-index: 1;
+  padding: clamp(3.5rem, 9vh, 6rem) 1.5rem clamp(5rem, 12vh, 8rem);
+}
+
+.about-grid {
+  width: min(100%, var(--page-max));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  align-items: start;
+}
+
+.about-col {
+  display: grid;
+  gap: 1.4rem;
+  justify-items: start;
+}
+
+/* Thin vertical rule between the two columns (matches the hero divider);
+   stretches to the taller column and is hidden once the layout stacks. */
+.about-divider {
+  align-self: stretch;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.about-heading {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: clamp(1.6rem, 3.2vw, 2.15rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
+}
+
+/* ── Left column: projects timeline ── */
+/* Fade + button form one unit: the masked list dissolves toward the bottom and
+   the button tucks up into that fade, so the list appears to trail into it. */
+.timeline-block {
+  width: 100%;
+  display: grid;
+  justify-items: start;
+}
+
+.timeline-fade {
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0, 0, 0, 0.5) 74%, rgba(0, 0, 0, 0.12) 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0, 0, 0, 0.5) 74%, rgba(0, 0, 0, 0.12) 90%, transparent 100%);
+}
+
+/* Pull the button up into the dissolving tail of the list. */
+.timeline-block .hero-cta {
+  margin-top: -0.75rem;
+}
+
+.timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 1.75rem;
+  display: grid;
+  gap: 1.6rem;
+}
+
+/* The vertical line, tinted with the site's green accent at the top. */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 7px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg,
+    rgba(45, 225, 150, 0.55) 0%,
+    rgba(255, 255, 255, 0.18) 45%,
+    rgba(255, 255, 255, 0.04) 100%);
+}
+
+.timeline__item {
+  position: relative;
+}
+
+/* Node dot, centered on the line. */
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -1.75rem;
+  top: 6px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 1px solid rgba(45, 225, 150, 0.75);
+  box-shadow: 0 0 0 3px rgba(45, 225, 150, 0.1);
+}
+
+.timeline__title {
+  margin: 0 0 0.35rem;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #eaf2ff;
+}
+
+.timeline__desc {
+  margin: 0;
+  color: rgba(220, 232, 255, 0.72);
+  font-size: 0.9rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Small muted date range beneath each project's description. */
+.timeline__date {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+/* ── Right column: more about me ── */
+.about-bio {
+  margin: 0;
+  color: rgba(220, 232, 255, 0.8);
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.about-points {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.7rem;
+  color: rgba(220, 232, 255, 0.78);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.about-points li {
+  padding-left: 0.2rem;
+}
+
+/* Reuses the site's .social-link / .social-icon styling, laid out in a row. */
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 0.15rem;
 }
 
 /* ===== PAGE SECTIONS ===== */
@@ -1135,6 +1430,17 @@ button:focus-visible {
   /* Tablet: 3 across gets cramped, step down to 2 columns */
   .project-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Stack the about section: projects timeline first, then "More About Me"
+     (already the DOM order, so no reordering needed). */
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* No vertical rule between stacked columns. */
+  .about-divider {
+    display: none;
   }
 
   .detail-grid {

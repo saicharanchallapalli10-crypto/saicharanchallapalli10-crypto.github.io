@@ -124,10 +124,11 @@ body {
    it back: fainter colors and a shorter footprint keep it subtle on mobile. */
 @media (max-width: 640px) {
   :root {
-    --glow-core:  rgba(45, 225, 150, 0.36);
-    --glow-mid:   rgba(35, 200, 180, 0.20);
-    --glow-faint: rgba(40, 205, 175, 0.12);
-    --glow-height: 62%;
+    --glow-core:  rgba(45, 230, 150, 0.75);
+    --glow-mid:   rgba(35, 205, 180, 0.44);
+    --glow-faint: rgba(40, 205, 175, 0.26);
+    --glow-width:  95%;
+    --glow-height: 98%;
   }
 }
 

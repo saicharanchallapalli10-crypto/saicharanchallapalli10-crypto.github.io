@@ -540,8 +540,50 @@ button, a { -webkit-tap-highlight-color: transparent; }
     rgba(255, 255, 255, 0.04) 100%);
 }
 
+/* Shooting star along the line. ::after occupies exactly the line's box (a hair
+   wider, centered on it) and paints the comet as its background, so the light
+   is clipped to the line by construction. The background travels linearly from
+   above the top past the bottom; because the travel distance is scaled by
+   (streak + pause) / streak, the comet exits right at --star-streak and the
+   remaining time is the idle pause. Tweak the vars below (times in seconds). */
+.timeline {
+  --star-color: rgba(150, 245, 190, 1);
+  --star-length: 80px;
+  --star-streak: 1.6;  /* seconds the streak takes to run the line */
+  --star-pause: 2.5;   /* seconds idle before the next one */
+  --star-scale: calc((var(--star-streak) + var(--star-pause)) / var(--star-streak));
+}
+
+.timeline::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  bottom: 0;
+  width: 3px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 0%, var(--star-color) 30%, transparent 100%) no-repeat;
+  background-size: 100% var(--star-length);
+  background-position: 0 calc(-1 * var(--star-length));
+  /* Soft horizontal falloff so the 3px reads as glow around the 1px line. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 50%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 50%, transparent);
+  filter: blur(0.3px) drop-shadow(0 0 4px var(--star-color)) drop-shadow(0 0 2px var(--star-color));
+  animation: timeline-star calc((var(--star-streak) + var(--star-pause)) * 1s) linear infinite reverse; /* travels bottom -> top */
+}
+
+@keyframes timeline-star {
+  from { background-position: 0 calc(-1 * var(--star-length)); }
+  /* Equivalent to -length + scale * (lineHeight + length): fully past the
+     bottom at time = streak, then off-box (invisible) for the pause. */
+  to {
+    background-position: 0 calc(var(--star-scale) * 100% + (2 * var(--star-scale) - 1) * var(--star-length));
+  }
+}
+
 .timeline__item {
   position: relative;
+  z-index: 1; /* dots + text above the shooting star */
 }
 
 /* Node dot, centered on the line. */
@@ -1566,6 +1608,8 @@ button:focus-visible {
   html { scroll-behavior: auto !important; }
 
   .hero-intro { animation: none !important; }
+
+  .timeline::after { display: none; }
 
   .view,
   .top-nav,

@@ -1146,7 +1146,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   border-left: 2px solid rgba(0, 201, 200, 0.5);
   color: var(--text-dim);
   font-size: 0.88rem;
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.6;
 }
 

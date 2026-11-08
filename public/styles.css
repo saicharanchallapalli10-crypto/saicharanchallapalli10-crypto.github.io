@@ -1120,6 +1120,83 @@ button, a { -webkit-tap-highlight-color: transparent; }
   line-height: 1.6;
 }
 
+/* Outdated-model flag: a pill on the viewer (mirrors the fullscreen button's
+   glass styling, opposite corner) plus a short line below the hint. */
+.pcb-viewer__badge {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 1;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid rgba(0, 201, 200, 0.35);
+  border-radius: 999px;
+  color: rgba(208, 228, 255, 0.92);
+  background: rgba(5, 10, 21, 0.44);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-size: 0.74rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.pcb-viewer__note {
+  margin: 0.65rem 0 0;
+  padding-left: 0.7rem;
+  border-left: 2px solid rgba(0, 201, 200, 0.5);
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* Collapsible revision notes tucked under the viewer (closed by default). */
+.revision-notes {
+  margin-top: 0.9rem;
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.revision-notes summary {
+  width: fit-content;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.revision-notes summary::marker { color: rgba(255, 255, 255, 0.4); }
+
+.revision-notes summary:hover,
+.revision-notes[open] summary { color: var(--text-dim); }
+
+.revision-notes summary:focus-visible {
+  outline: 2px solid #00c9c8;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.revision-notes__group { margin-top: 0.85rem; }
+
+.revision-notes__head {
+  margin: 0 0 0.3rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.revision-notes ul {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.revision-notes li::marker { color: rgba(255, 255, 255, 0.4); }
+
 /* ===== RESUME PAGE ===== */
 .resume-hero {
   position: relative;

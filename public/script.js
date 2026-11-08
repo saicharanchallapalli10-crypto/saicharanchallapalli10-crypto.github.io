@@ -38,6 +38,44 @@ const PROJECTS = [
     // This model's origin differs from the other boards', so let model-viewer center
     // the camera on its own bounding-box center (stays centered across resizes).
     camera: { target: "auto" },
+    modelNote: {                                  // ← flags the 3D model as outdated (badge + line below the viewer)
+      badge: "Older revision",
+      text: "Note: this 3D model shows the previous board revision and doesn't include the Rev B changes below.",
+    },
+    revisionNotes: {                              // ← collapsible notes shown below the 3D viewer
+      title: "Revision notes: Rev B",
+      groups: [
+        {
+          heading: "Power",
+          items: [
+            "Swapped the MCP1700 (250 mA) for an AP2112K-3.3 (600 mA) to handle ESP32-S3 Wi-Fi current peaks without brownout resets.",
+            "Grouped the USB-C input, fuse, reverse-protection diode, TVS, and bulk cap into one tight cluster at the connector, so the TVS clamps transients before they reach the rest of the board.",
+          ],
+        },
+        {
+          heading: "Analog front end",
+          items: [
+            "Lowered the op-amp gain from 11× to 3× so standard line-level audio stays inside the ADC range without clipping. Fine sensitivity moves to firmware via the rotary encoder.",
+            "Packed the gain resistors directly against the op-amp's inverting input and placed its decoupling cap at the supply pin to reduce noise pickup.",
+            "Moved the mid-rail bias filter cap to the divider's midpoint.",
+          ],
+        },
+        {
+          heading: "Layout",
+          items: [
+            "Re-placed blocks to follow the ESP32-S3 module's pinout: USB and power on one side, analog on the other, so the SPI display lines and USB data pair no longer cross the audio path.",
+            "Added a copper keepout under the module antenna and moved the metal-bodied encoder away from it.",
+          ],
+        },
+        {
+          heading: "MCU support",
+          items: [
+            "Wired the USB-C data lines to the ESP32-S3's native USB for flashing, and added a UART test header as a backup.",
+            "Increased the EN reset cap to 1 µF and the bulk cap to 22 µF, following Espressif's hardware design guidelines.",
+          ],
+        },
+      ],
+    },
   },
   {
     name: "USB-C Inline Power Meter",
@@ -307,6 +345,8 @@ function resolveCamera(p) {
 function detailVisualMarkup(p) {
   if (p.model3D) {
     const cam = resolveCamera(p);
+    const modelBadge = p.modelNote ? `<span class="pcb-viewer__badge">${p.modelNote.badge}</span>` : "";
+    const modelNote = p.modelNote ? `<p class="pcb-viewer__note">${p.modelNote.text}</p>` : "";
     return `
       <div class="pcb-viewer-shell" id="pcb-viewer-shell">
         <model-viewer id="pcb-viewer" class="pcb-viewer" src="${p.model3D}" alt="3D model of ${p.name}"
@@ -320,6 +360,7 @@ function detailVisualMarkup(p) {
             <span>Loading 3D PCB</span>
           </div>
         </model-viewer>
+        ${modelBadge}
         <button class="pcb-viewer__fullscreen" type="button" aria-label="Toggle fullscreen" data-fullscreen>
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <path d="M8 3H3v5M16 3h5v5M8 21H3v-5M21 16v5h-5"/>
@@ -328,6 +369,7 @@ function detailVisualMarkup(p) {
       </div>
       <button class="pcb-viewer__reset" type="button" data-reset>Reset View</button>
       <p class="pcb-viewer__hint">Drag to rotate, scroll to zoom, and pan with touch or right-click.</p>
+      ${modelNote}
     `;
   }
   // A project may supply a dedicated detail image (distinct from its tile preview),
@@ -360,6 +402,17 @@ function openDetail(i) {
   const projectLinkHtml = (p.projectLink)
     ? `<div class="detail-project-link"><a href="${p.projectLink.url}" target="_blank" rel="noopener noreferrer">${p.projectLink.text}</a></div>`
     : "";
+  // Collapsed-by-default revision notes, rendered directly beneath the visual.
+  const revisionNotes = (p.revisionNotes && p.revisionNotes.groups && p.revisionNotes.groups.length)
+    ? `<details class="revision-notes">
+         <summary>${p.revisionNotes.title}</summary>
+         ${p.revisionNotes.groups.map(g => `
+           <div class="revision-notes__group">
+             <h4 class="revision-notes__head">${g.heading}</h4>
+             <ul>${g.items.map(item => `<li>${item}</li>`).join("")}</ul>
+           </div>`).join("")}
+       </details>`
+    : "";
 
   projectDetailView.innerHTML = `
     <button class="detail-back" type="button" data-back>← Back to projects</button>
@@ -371,7 +424,7 @@ function openDetail(i) {
         ${paragraphs}
         ${decisions}
       </div>
-      <div class="detail-visual-col">${detailVisualMarkup(p)}${projectLinkHtml}</div>
+      <div class="detail-visual-col">${detailVisualMarkup(p)}${revisionNotes}${projectLinkHtml}</div>
     </div>
   `;
 

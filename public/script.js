@@ -17,13 +17,13 @@ const PROJECTS = [
     eyebrow: "Hardware / Embedded",          // ← category line shown in the detail view
     // Detail-view body paragraphs (each renders as its own <p>)
     paragraphs: [
+      "From a high-level perspective, the board takes weak stereo audio from a 3.5mm jack, AC-couples it to strip any DC offset, sums it to mono, biases it to 1.65V so it fits inside the ESP32's 0–3.3V ADC window, amplifies it ×3 for good ADC resolution, then filters out any frequencies above ~16kHz before digitizing. Firmware then runs FFT math to split the audio into frequency bands and draws them as animated bars on the OLED in real time.",
       "I decided to take this project on mainly because I think it's just really cool. When I listen to music on my laptop, I usually have an equalizer running on a second screen to visualize the music; I've always liked seeing the highs, mids, and lows move as it plays. That inspired me to build a physical device that shows the same kind of equalizer, but in hardware. I also wanted to learn more about how op-amps and ADCs work, so this project let me combine both of those goals.",
-      "From a high-level perspective, the board takes weak stereo audio from a 3.5mm jack, AC-couples it to strip any DC offset, sums it to mono, biases it to 1.65V so it fits inside the ESP32's 0–3.3V ADC window, amplifies it ×11 for good ADC resolution, then filters out any frequencies above ~16kHz before digitizing. Firmware then runs FFT math to split the audio into frequency bands and draws them as animated bars on the OLED in real time.",
     ],
     chips: [], // ← info chips in detail
     keyDecisions: [                                          // ← "Key design decisions" bullets in detail
       "Rail-to-rail MCP6002 op-amp (not LM358) for clean single-supply 3.3V operation",
-      "Two-op-amp topology: one for ×11 audio gain, second half as a unity buffer for the 1.65V mid-rail reference",
+      "Two-op-amp topology: one for ×3 audio gain, second half as a unity buffer for the 1.65V mid-rail reference",
       "Separate analog 3.3V rail via ferrite bead to isolate the op-amp from digital switching noise",
       "RC anti-alias filter (~16kHz cutoff) ahead of the ADC to prevent aliasing in the FFT",
       "Star-grounded 2-layer PCB layout with stitching vias and analog/digital domain separation",
